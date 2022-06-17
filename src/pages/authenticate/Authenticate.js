@@ -1,25 +1,92 @@
 import "./styles.css";
-import React, { useState } from "react";
-import {
-  Button,
-  Checkbox,
-  Chip,
-  Divider,
-  FormControlLabel,
-  Paper,
-  TextField,
-  Typography,
-} from "@mui/material";
-import { Label, } from "@mui/icons-material";
+import React, { useContext, useState } from "react";
+import { Button, Chip, Divider, Paper, TextField } from "@mui/material";
 import { Link } from "react-router-dom";
 import SignupModal from "./SignupModal";
+import axios from "axios";
+import { AppContext } from "../../states/AppContext";
+import { decodeToken } from "../../utilities/Utilities";
 
 const Authenticate = () => {
   const [openModal, setopenModal] = useState(false);
+  const [loginDetails, setLoginDetails] = useState({
+    username: "",
+    password: "",
+  });
+  const [loginError, setLoginError] = useState({
+    usernameError: false,
+    passwordError: false,
+  });
 
-  const modalHandler=()=>{
+  const [state, dispatch] = useContext(AppContext);
+
+  const onChangeHandler = (event) => {
+    setLoginDetails({
+      ...loginDetails,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const isFormInvalid = (loginDetails) => {
+    let err;
+    let { username, password } = loginDetails;
+    if (username === "") {
+      setLoginError({
+        ...loginError,
+        usernameError: true,
+      });
+
+      return true;
+    }
+    if (password === "") {
+      setLoginError({
+        ...loginError,
+        passwordError: true,
+      });
+      return true;
+    }
+
+    return false;
+  };
+
+  const onSubmit = async () => {
+    if (isFormInvalid(loginDetails)) return;
+
+    const response = await axios.post("/api/auth/login", loginDetails);
+    // console.log(response.status);
+
+    if (response.status === 201) {
+      const { message, token } = response.data;
+      localStorage.setItem("token", token);
+      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+
+      const currentUser = decodeToken(token)
+
+      dispatch({
+        type:"CURRENT_USER",
+        payload: currentUser
+      })
+
+      dispatch({
+        type: "LOGIN",
+        payload: true,
+      });
+    }
+
+    setLoginError({
+      usernameError: false,
+      passwordError: false,
+    });
+
+    setLoginDetails({
+      username: "",
+      password: "",
+    });
+  };
+
+  const modalHandler = () => {
     setopenModal(!openModal);
-  }
+  };
   return (
     <div className="auth">
       <div className="auth__main">
@@ -34,32 +101,37 @@ const Authenticate = () => {
         </div>
 
         <div className="auth__main-right">
-          <Paper style={{ padding: "1.5rem", width: "100%" }}>
+          <Paper style={{ width: "100%", padding: ".5rem" }}>
             <TextField
               name="username"
               label="Username"
-              defaultValue=""
+              value={loginDetails.username}
+              onChange={onChangeHandler}
               helperText="please provide your sharehub username"
               style={{ width: "100%" }}
+              error={loginError.usernameError}
             />
             <br />
             <br />
             <TextField
               name="password"
               label="Password"
-              defaultValue=""
+              value={loginDetails.password}
+              onChange={onChangeHandler}
               helperText="please provide your sharehub password"
+              type="password"
               style={{ width: "100%" }}
+              error={loginError.passwordError}
             />
             <br />
             <br />
-            
+
             <Link to="/forgot-password" variant="body2">
-              {'Forgot password?'}
+              {"Forgot password?"}
             </Link>
             <br />
             <br />
-            <Button variant="contained" fullWidth>
+            <Button onClick={onSubmit} variant="contained" fullWidth>
               Log in
             </Button>
             <br />
