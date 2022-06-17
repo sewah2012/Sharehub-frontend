@@ -38,4 +38,29 @@
     height: 3rem;
     background-color: black;
     padding: .5rem 2rem;
+    
 }
+
+
+@media only screen and (max-width: 600px) {
+    .auth__main-left > img {
+      width: 10rem;
+    }
+
+    .auth__main-left{
+        margin: .5rem;
+        width: 100%;
+        
+    }
+    
+    .auth__main-left p{
+        margin: .5rem 0rem;
+        font-size: 1rem;
+    }
+
+    .auth__main-right{
+        width: fit-content;
+        margin: .5rem;
+    
+    }
+  }
