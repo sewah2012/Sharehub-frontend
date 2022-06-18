@@ -41,7 +41,7 @@ const ConfirmEmail = () => {
   return (
     <div className="confirmEmail">
       {confirmed ? (
-        <div>
+        <div className="confirmEmail__form">
           <Typography variant="h4">
             Your Email has successfully been verified. 
           </Typography>

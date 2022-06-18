@@ -1,6 +1,13 @@
 import "./styles.css";
 import React, { useContext, useState } from "react";
-import { Button, Chip, Divider, Paper, TextField } from "@mui/material";
+import {
+  Button,
+  Chip,
+  CircularProgress,
+  Divider,
+  Paper,
+  TextField,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 import SignupModal from "./SignupModal";
 import axios from "axios";
@@ -8,80 +15,123 @@ import { AppContext } from "../../states/AppContext";
 import { decodeToken } from "../../utilities/Utilities";
 
 const Authenticate = () => {
+  const [loading, setLoading] = useState(false);
   const [openModal, setopenModal] = useState(false);
   const [loginDetails, setLoginDetails] = useState({
     username: "",
     password: "",
   });
   const [loginError, setLoginError] = useState({
-    usernameError: false,
-    passwordError: false,
+    username: false,
+    password: false,
   });
 
   const [state, dispatch] = useContext(AppContext);
 
   const onChangeHandler = (event) => {
+    // alert("key pressed")
+    setLoginError({
+      ...loginError,
+      [event.target.name]: false,
+    });
+
+    
+
     setLoginDetails({
       ...loginDetails,
       [event.target.name]: event.target.value,
     });
   };
 
-  const isFormInvalid = (loginDetails) => {
-    let err;
+  
+
+  const onSubmit = () => {
+    setLoading(true);
     let { username, password } = loginDetails;
     if (username === "") {
       setLoginError({
         ...loginError,
-        usernameError: true,
+        username: true,
       });
-
-      return true;
+      setLoading(false)
+      return
     }
     if (password === "") {
       setLoginError({
         ...loginError,
-        passwordError: true,
+        password: true,
       });
-      return true;
+      setLoading(false)
+      return
     }
+   
+    axios
+      .post("/api/auth/login", loginDetails)
+      .then((resp) => {
+        if (resp.status === 201) {
+          const { message, token } = resp.data;
+          console.log(message);
 
-    return false;
-  };
+          localStorage.setItem("token", token);
+          axios.defaults.headers.common["Authorization"] = "Bearer " + token;
 
-  const onSubmit = async () => {
-    if (isFormInvalid(loginDetails)) return;
+          const currentUser = decodeToken(token);
 
-    const response = await axios.post("/api/auth/login", loginDetails);
-    // console.log(response.status);
+          dispatch({
+            type: "CURRENT_USER",
+            payload: currentUser,
+          });
 
-    if (response.status === 201) {
-      const { message, token } = response.data;
-      localStorage.setItem("token", token);
-      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+          dispatch({
+            type: "LOGIN",
+            payload: true,
+          });
 
-      const currentUser = decodeToken(token)
+            
+          setLoginDetails({
+            username: "",
+            password: "",
+          });
 
-      dispatch({
-        type:"CURRENT_USER",
-        payload: currentUser
+          setLoading(false);
+
+          return 
+        }
+
+        
       })
+      .catch((err) => {
+      //  console.log(err.response.data);
 
-      dispatch({
-        type: "LOGIN",
-        payload: true,
+       const error = err.response.data;
+
+          
+        if(error.message==="Bad credentials"){
+          setLoginError({
+            ...loginError,
+            password: true,
+          });
+          setLoading(false)
+
+          return
+        }
+
+        if(error.message==="An error occured while processing request"){
+          setLoginError({
+            ...loginError,
+            username: true,
+          });
+          setLoading(false)
+
+          return
+        }
+
+        setLoading(false)
+      
       });
-    }
 
-    setLoginError({
-      usernameError: false,
-      passwordError: false,
-    });
+  
 
-    setLoginDetails({
-      username: "",
-      password: "",
-    });
   };
 
   const modalHandler = () => {
@@ -109,7 +159,7 @@ const Authenticate = () => {
               onChange={onChangeHandler}
               helperText="please provide your sharehub username"
               style={{ width: "100%" }}
-              error={loginError.usernameError}
+              error={loginError.username}
             />
             <br />
             <br />
@@ -121,7 +171,7 @@ const Authenticate = () => {
               helperText="please provide your sharehub password"
               type="password"
               style={{ width: "100%" }}
-              error={loginError.passwordError}
+              error={loginError.password}
             />
             <br />
             <br />
@@ -131,8 +181,14 @@ const Authenticate = () => {
             </Link>
             <br />
             <br />
-            <Button onClick={onSubmit} variant="contained" fullWidth>
+            <Button
+              onClick={onSubmit}
+              variant="contained"
+              fullWidth
+              disabled={loading}
+            >
               Log in
+              {loading && <CircularProgress />}
             </Button>
             <br />
             <br />
@@ -156,8 +212,6 @@ const Authenticate = () => {
           Supervised by: Prof. Yassine
         </Typography>
       </div> */}
-
-      
     </div>
   );
 };
