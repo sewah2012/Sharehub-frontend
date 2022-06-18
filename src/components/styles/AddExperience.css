@@ -1,0 +1,42 @@
+.addExp{
+   
+}
+
+.addExp__form{
+    margin: 1rem 1rem;
+}
+
+.attachements{
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    padding: .1rem;
+}
+
+.attachementHolder{
+    width: 5rem;
+    height:5rem;
+    margin: .1rem;
+    border: 1px solid #3b3b3d;
+}
+
+.attachementHolder > img{
+    object-fit: contain;
+    width: inherit;
+    height: inherit;
+}
+
+.upload{
+    cursor: pointer;
+    color: #3b3b3d;
+}
+.upload:hover{
+    background-color: #1414ad;
+    opacity: .5;
+}
+
+
+
+@media only screen and (min-width: 600px) {
+    
+}

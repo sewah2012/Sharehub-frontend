@@ -140,11 +140,12 @@ const Authenticate = () => {
               <Chip label="or" />
             </Divider>
             <br />
-            <Button variant="contained" fullWidth onClick={modalHandler}>
+            <Button variant="outlined" fullWidth onClick={modalHandler}>
               Create a new account
             </Button>
           </Paper>
         </div>
+        <SignupModal modalOpen={openModal} setModalOpen={setopenModal} />
       </div>
       {/* <div className="auth__footer">
         <Typography variant="h4">
@@ -156,7 +157,7 @@ const Authenticate = () => {
         </Typography>
       </div> */}
 
-      <SignupModal modalOpen={openModal} setModalOpen={setopenModal} />
+      
     </div>
   );
 };
