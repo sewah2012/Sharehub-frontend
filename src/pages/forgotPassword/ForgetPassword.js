@@ -48,14 +48,14 @@ const ForgetPassword = () => {
 
     const codeMessage = "Please enter the Verification code you received in your inbox: "
     const confirmMessage = "You password has successfully been reset. A temp login details has been sent to your inbox."
-
+    const type  = "verifyResetPasswordCode"
   return (
     <div className="forgetPassword">
       {valid ? (
         <ConfirmCodePage
           codeMessage={codeMessage} 
           confirmMessage={confirmMessage}
-          // url = {codeConfirmURL}
+          type = {type}
         />
       ) : (
         <div className="confirmEmail__form">

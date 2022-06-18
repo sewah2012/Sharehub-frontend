@@ -4,7 +4,7 @@ import React, { useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
-const ConfirmCodePage = ({ codeMessage, confirmMessage }) => {
+const ConfirmCodePage = ({ codeMessage, confirmMessage, type }) => {
   const [loading, setLoading] = useState(false);
   const [code, setCode] = useState("");
   const [error, setError] = useState(false);
@@ -13,14 +13,14 @@ const ConfirmCodePage = ({ codeMessage, confirmMessage }) => {
   const navigate = useNavigate();
 
   const handleSubmit = () => {
-    setLoading(true);
+    setLoading(true);   
     if (code === "") {
       setError(true);
       setLoading(false);
       return;
     }
 
-    const url = `/api/auth/verify?code=${code}`;
+    const url = `/api/auth/${type}?code=${code}`;
 
     axios
       .get(url)
@@ -33,10 +33,13 @@ const ConfirmCodePage = ({ codeMessage, confirmMessage }) => {
         }
       })
       .catch((err) => {
-        console.log(err);
-      });
+        const error = err.response.data
 
-    setLoading(false);
+        if(error.status ==="NOT_FOUND"){
+          setError(true)
+          setLoading(false);
+        }
+      });
   };
   const navigteToLogin = () => {
     navigate("/authenticate");
@@ -78,7 +81,7 @@ const ConfirmCodePage = ({ codeMessage, confirmMessage }) => {
             fullWidth
             onClick={handleSubmit}
           >
-            Submit Confirmation
+            Submit
             {loading && <CircularProgress />}
           </Button>
         </div>
