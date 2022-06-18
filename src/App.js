@@ -15,6 +15,7 @@ import ProtectedRoute from "./utilities/ProtectedRoute";
 import axios from 'axios';
 import { AppContext } from "./states/AppContext";
 import AuthVerify from "./utilities/AuthVerify";
+import ConfirmEmail from "./pages/confirmEmail/ConfirmEmail";
 
 const AUTH_TOKEN = localStorage.getItem("token");
 axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
@@ -46,6 +47,7 @@ const App = () => {
             }
           />
 
+          <Route path = '/confirm-email' element={<ConfirmEmail />} />
           <Route path="/forgot-password" element={<ForgetPassword />} />
         </Routes>
         {/* <AuthVerify /> */}
