@@ -1,0 +1,123 @@
+
+ .searchWrapper{
+    background-color: #FCF2F2;
+    width: fit-content;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 .1rem;
+    border-radius: 1rem;
+}
+/* .searchInputWrapper{
+    background-color: #FCF2F2;
+    width: fit-content;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: .5rem;
+} */
+
+.searchInput{
+    width: 7rem;
+    height: 20px; 
+    margin: 0;
+    margin: .5rem;
+    background-color: transparent;
+    border: none;
+    /* margin: 0 2rem 0rem 1rem; */
+    color: #3b3b3d;
+    font-size: 1rem;
+  
+   }
+
+   .searchInput:focus{
+    background-color: transparent;
+    border: none;
+    outline: none;
+   
+}
+
+.iconWrapper{
+    background-color: #01011D;
+    width: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: .1rem;
+    border-bottom-right-radius: 1rem;
+    border-top-right-radius: 1rem;
+    cursor: pointer;
+    height: 100%;
+    margin: 0;
+}
+
+.iconWrapper:hover{
+    background-color: #3b3b3d;
+}
+
+@media only screen and (min-width: 600px) {
+    .searchWrapper{
+        background-color: #FCF2F2;
+        width: fit-content;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        padding: .1rem .1rem 0;
+        border-radius: 1rem;
+    }
+    
+    .searchInput{
+        height: 40px; 
+        width: 25rem;
+        background-color: transparent;
+        border: none;
+        margin: 0 2rem 0rem 1rem;
+        color: #3b3b3d;
+        font-size: 1rem;
+    }
+    
+    .searchInput:focus{
+        background-color: transparent;
+        border: none;
+        outline: none;
+       
+    }
+
+
+    .attachements{
+        display: flex;
+        justify-content: flex-start;
+        padding: .1rem;
+    }
+
+    .attachementHolder{
+        width: 2.5rem;
+        height: 2.5rem;
+        margin: .1rem;
+    }
+
+    .attachementHolder >img{
+        object-fit: contain;
+    }
+
+
+
+    
+    .iconWrapper{
+        background-color: #01011D;
+        width: 3rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: .5rem;
+        border-bottom-right-radius: 1rem;
+        border-top-right-radius: 1rem;
+        cursor: pointer;
+        height: 100%;
+    }
+    
+    .iconWrapper:hover{
+        background-color: #3b3b3d;
+    }
+
+}

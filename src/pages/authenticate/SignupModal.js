@@ -1,3 +1,4 @@
+import "./styles.css";
 import React, { useEffect, useState } from "react";
 import {
   Button,
@@ -21,78 +22,94 @@ const style = {
   backgroundColor: "white",
   border: "2px solid #000",
   boxShadow: 24,
-  p: 4
+  p: 4,
 };
 
-const mobileStyle = {
-    position: "absolute",
-    top: "0",
-    left: "50%",
-    transform: "translate(-50%, 0)",
-    width: "fit-content",
-    backgroundColor: "white",
-    border: "2px solid #000",
-    boxShadow: 24,
-    p: 4,
-    height:"80vh",
-    overflowY: "scroll"
-}
-
-
-
 const SignupModal = ({ modalOpen, setModalOpen }) => {
-    const [isMobile, setIsMobile] = useState(false)
+  const [signupDetails, setSignupDetails] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    username: "",
+    password: "",
+    confirmPassword: ""
+  })
+
   const handleClose = () => {
     setModalOpen(!modalOpen);
   };
 
-   
+  const onChangeHandler = (event) => {
+    setSignupDetails({
+      ...signupDetails,
+      [event.target.name]: event.target.value,
+    });
+  };
 
+
+  const handleSubmit = (event)=>{
+    event.preventDefault()
+      alert(signupDetails.firstName)
+  }
   return (
-    <Modal
-      open={modalOpen}
-      onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
-      <Box sx={isMobile ?  mobileStyle :  style}>
-        <Typography id="modal-modal-title" variant="h2" component="h2">
-          Setup an Account
-        </Typography>
-        <Box>
-          <TextField
-            name="firstName"
-            label="First Name"
-            defaultValue=""
-            helperText="please provide your first name"
-            style={{ margin: ".1rem" }}
-          />
-          <TextField
-            name="lastName"
-            label="Last Name"
-            defaultValue=""
-            helperText="please provide your last name"
-            style={{ margin: ".1rem" }}
-          />
-          <br />
-          <br />
-          <TextField
-            name="email"
-            label="Email Address"
-            type="email"
-            helperText="please provide your first name"
-            style={{ margin: ".1rem" }}
-          />
+    <div className="modalWrapper">
+      <Modal
+        // sx={{height: "100%"}}
+        open={modalOpen}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <div className="signupModalForm">
+          <Typography id="modal-modal-title" variant="h4" component="h2">
+            Setup an Account
+          </Typography>
+          <form onSubmit={handleSubmit}>
+            <TextField
+            onChange={onChangeHandler}
+            value = {signupDetails.firstName}
+            className="signupTextfield"
+              name="firstName"
+              label="First Name"
+              defaultValue=""
+              helperText="please provide your first name"
+              style={{ margin: ".1rem" }}
+            />
+            <TextField
+            onChange={onChangeHandler}
+            value = {signupDetails.lastName}
+            className="signupTextfield"
+              name="lastName"
+              label="Last Name"
+              defaultValue=""
+              helperText="please provide your last name"
+              style={{ margin: ".1rem" }}
+            />
+            <br />
+            <br />
+            <TextField
+            onChange={onChangeHandler}
+            value = {signupDetails.email} 
+            className="signupTextfield"
+              name="email"
+              label="Email Address"
+              type="email"
+              helperText="please provide your first name"
+              style={{ margin: ".1rem" }}
+            />
 
-          <TextField
-            name="username"
-            label="Username"
-            type="text"
-            helperText="please provide your username"
-            style={{ margin: ".1rem" }}
-          />
+            <TextField
+            onChange={onChangeHandler}
+            value = {signupDetails.username}
+            className="signupTextfield"
+              name="username"
+              label="Username"
+              type="text"
+              helperText="please provide your username"
+              style={{ margin: ".1rem" }}
+            />
 
-          {/* <TextField
+            {/* <TextField
             name="dateOfBirth"
             label="Birthday"
             type="date"
@@ -103,50 +120,61 @@ const SignupModal = ({ modalOpen, setModalOpen }) => {
               shrink: true,
             }}
           /> */}
-          <br />
-          <br />
-          <TextField
-            name="password"
-            label="Password"
-            helperText="Please provide a strong password"
-            type="password"
-            style={{ margin: ".1rem" }}
-          />
+            <br />
+            <br />
+            <TextField
+            onChange={onChangeHandler}
+            value = {signupDetails.password}
+            className="signupTextfield"
+              name="password"
+              label="Password"
+              helperText="Please provide a strong password"
+              type="password"
+              style={{ margin: ".1rem" }}
+            />
 
-          <TextField
-            name="passwordConfirmation"
-            label="Confirm Password"
-            helperText="Please enter again your password"
-            type="password"
-            style={{ margin: ".1rem" }}
-          />
-          <br />
-          <br />
-          <FormControlLabel
-            // value={}
-            control={<Checkbox defaultChecked={false} />}
-            label="Accept Terms and Agreement of sharehub"
-          />
-          <br />
-          <br />
-          <Button variant="contained" fullWidth>
-            Sign up
-          </Button>
-          <br />
+            <TextField
+            onChange={onChangeHandler}
+            value = {signupDetails.confirmPassword}
+            className="signupTextfield"
+              name="confirmPassword"
+              label="Confirm Password"
+              helperText="Please enter again your password"
+              type="password"
+              style={{ margin: ".1rem" }}
+            />
+            <br />
+            <br />
+            <FormControlLabel
+              // value={}
+              control={<Checkbox defaultChecked={false} />}
+              label="Accept Terms and Agreement of sharehub"
+              
+            />
+            <br />
+            <br />
+            <Button variant="contained" fullWidth>
+              Sign up
+            </Button>
+            <br />
             <br />
             <Divider>
               <Chip label="or" />
             </Divider>
             <br />
-          <Typography variant="body">
-            Have an account ? 
-            <Button 
-            onClick={handleClose}
-            variant="text" > Sign in </Button>
-          </Typography>
-        </Box>
-      </Box>
-    </Modal>
+            <Typography variant="body">
+              Have an account ?
+              <Button onClick={handleClose} variant="text">
+                {" "}
+                Sign in{" "}
+              </Button>
+            </Typography>
+          </form>
+        </div>
+      </Modal>
+    </div>
+      
+   
   );
 };
 
