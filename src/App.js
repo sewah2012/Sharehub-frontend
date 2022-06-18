@@ -9,7 +9,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import Authenticate from "./pages/authenticate/Authenticate";
-import ForgetPassword from "./pages/ForgetPassword";
+import ForgetPassword from "./pages/forgotPassword/ForgetPassword";
 import MainApp from "./pages/MainApp/MainApp";
 import ProtectedRoute from "./utilities/ProtectedRoute";
 import axios from 'axios';
