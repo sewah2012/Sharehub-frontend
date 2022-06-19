@@ -5,7 +5,7 @@ export const AppContext = createContext();
 
 const initialState = 
     {
-        isAuthenticated:false,
+        isAuthenticated:true,
         experience:[],
         currentUser: {},
     }

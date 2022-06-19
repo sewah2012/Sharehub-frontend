@@ -84,23 +84,6 @@
     }
 
 
-    .attachements{
-        display: flex;
-        justify-content: flex-start;
-        padding: .1rem;
-    }
-
-    .attachementHolder{
-        width: 2.5rem;
-        height: 2.5rem;
-        margin: .1rem;
-    }
-
-    .attachementHolder >img{
-        object-fit: contain;
-    }
-
-
 
     
     .iconWrapper{

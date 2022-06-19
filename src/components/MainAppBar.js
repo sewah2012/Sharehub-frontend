@@ -1,10 +1,9 @@
-import './styles/MainAppBar.css'
-import react, {useState} from "react";
+import "./styles/MainAppBar.css";
+import react, { useContext, useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
@@ -12,13 +11,13 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { Search } from "@mui/icons-material";
-
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
-
+import { AppContext } from "./../states/AppContext";
 
 const MainAppBar = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const [state, dispatch] = useContext(AppContext);
+
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -27,8 +26,13 @@ const MainAppBar = () => {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
+  const logout = () => {
+    dispatch({  
+      type: "SIGNOUT",
+      payload: false
+    })
+
+    localStorage.removeItem("token");
   };
 
   const handleCloseUserMenu = () => {
@@ -58,14 +62,18 @@ const MainAppBar = () => {
           </Box>
 
           <Box>
-          <div className="searchWrapper">
-            <input className="searchInput" placeholder='Search shared expereiences here...' type="search" />
-            <div className="searchBtn">
-           <div className='iconWrapper'>
-                <Search />
+            <div className="searchWrapper">
+              <input
+                className="searchInput"
+                placeholder="Search shared expereiences here..."
+                type="search"
+              />
+              <div className="searchBtn">
+                <div className="iconWrapper">
+                  <Search />
+                </div>
               </div>
             </div>
-          </div>
           </Box>
 
           <Box>
@@ -90,11 +98,9 @@ const MainAppBar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem onClick={handleCloseUserMenu}>
+                <Button onClick={logout}>Logout</Button>
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>

@@ -1,0 +1,87 @@
+.experience{
+    padding: .5rem;
+    color: #8A8E9D;
+    /* width: 100%; */
+    /* background-color: aqua; */
+}
+
+.experience h1, h2, h3, h4, h5 , h6{
+    color: #2A2A48;
+}
+
+.experience__header{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+
+}
+
+.experience__header-info{
+    margin-left: .5rem;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    /* flex-wrap: nowrap; */
+}
+
+
+
+
+.experience__action{
+    display: flex;
+    justify-content: space-between;
+}
+
+.experience__action > p {
+    padding-right: .5rem;
+}
+
+.experience__content{
+    margin: 1rem 0;
+}
+
+.experience__content p{
+    margin: .5rem 0;
+    text-align: justify;
+    
+}
+
+.experience__content-images img{
+    width: 100%;
+    object-fit: contain;
+}
+
+.experience__content-reactions{
+    display: flex;
+    justify-content: space-around;
+}
+.likes, .comments{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin: 1rem;
+}
+
+.add_comment{
+    border: 2px solid #8A8E9D;
+    padding: .5rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.add_comment input{
+    outline: none;
+    border: none;
+    background-color: transparent;
+    height: inherit;
+    width: 80%;
+}
+
+.commentsList{
+    margin: .5rem 0;
+}
+
+@media only screen and (min-width: 600px) {
+   
+}

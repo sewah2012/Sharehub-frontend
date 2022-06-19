@@ -1,0 +1,9 @@
+.midSection{
+    flex: 1;
+    padding: 1rem;
+    /* background-color: red; */
+}
+
+@media only screen and (min-width: 600px) {
+    
+}
