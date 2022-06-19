@@ -1,0 +1,14 @@
+.comment{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.comment_details{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+.description{
+    margin: 0 .5rem;
+}

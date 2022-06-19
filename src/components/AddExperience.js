@@ -2,6 +2,7 @@ import "./styles/AddExperience.css";
 import React, { useEffect, useState } from "react";
 import {
   Button,
+  CircularProgress,
   IconButton,
   Input,
   Paper,
@@ -13,7 +14,7 @@ import axios from "axios";
 
 const experienceTypes = ["LOCATION", "SERVICE"];
 
-const AddExperience = () => {
+const AddExperience = ({ open, setOpen }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedFile, setSelectedFile] = useState("");
   const [attachements, setAttachements] = useState([]);
@@ -55,7 +56,7 @@ const AddExperience = () => {
     setAttachements(newAtt);
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     setIsLoading(true);
 
@@ -73,41 +74,39 @@ const AddExperience = () => {
     bodyFormData.append("experience", JSON.stringify(experience));
     console.log("bodyFormData: " + bodyFormData);
 
-    const response = await axios({
+    axios({
       method: "post",
       url: "/api/experience/add",
       data: bodyFormData,
       headers: { "Content-Type": "multipart/form-data" },
     })
-    .then(res=>{
-        if(res.status===200){
-            setAttachements([]);
-            setExperience({
-                title: "",
-                details: "",
-                experienceType: "SERVICE",
-              }
-            )
-        
-            setIsLoading(false);
+      .then((res) => {
+        if (res.status === 200) {
+          setAttachements([]);
+          setExperience({
+            title: "",
+            details: "",
+            experienceType: "SERVICE",
+          });
+
+          setIsLoading(false);
         }
 
         setIsLoading(false);
-        alert("Problem occured when submiting ")
+        alert("Problem occured when submiting ");
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+        setIsLoading(false);
+      });
 
-    })
-
-    
+    setOpen(!open);
   };
   return (
     <div className="addExp">
-      {isLoading ? (
-        <h1>submiting ...</h1>
-      ) : (
-        <Typography variant="h4">Share some experience </Typography>
-      )}
       <div className="addExp__form">
-        <Paper sx={{ padding: "1rem 1rem" }}>
+        <div className="addExp__form-heading">
+          <h3>Share some experience </h3>
           <form onSubmit={handleSubmit} encType="multipart/form">
             <TextField
               name="experienceType"
@@ -121,7 +120,6 @@ const AddExperience = () => {
               // helperText="Please select your currency"
               fullWidth
             >
-             
               {experienceTypes.map((type, index) => (
                 <option key={index} value={type}>
                   {type}
@@ -217,11 +215,12 @@ const AddExperience = () => {
               variant="contained"
               fullWidth
               sx={{ backgroundColor: "#3b3b3d " }}
+              disabled={isLoading}
             >
-              Share
+              Share {isLoading && <CircularProgress />}
             </Button>
           </form>
-        </Paper>
+        </div>
       </div>
     </div>
   );

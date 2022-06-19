@@ -1,9 +1,46 @@
 .mainApp{
     background-color: #D9D9D9;
-    height: 100vh;
+    /* height: 100vh; */
    
 }
+.mainApp__midSection{
+    /* background-color: blueviolet; */
+}
+.mainApp__midSection-wrapper{
+    padding: 1rem;  
+}
+
+.mainApp_midSection_addContainer{
+    display: none;
+}
+
+.openShare{
+    display:inline;
+    z-index: 99;
+}
+
+/* .mainApp_shareAddBtn{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    z-index: 99;
+} */
+
+
+
+
 
 @media only screen and (min-width: 600px) {
+    .mainApp__midSection{        
+        display: flex;
+    }
+
+    .display{
+    display: inline;
+    }
+
+    .mainApp_shareAddBtn{
+        display: none;
+    }
     
 }
