@@ -1,5 +1,5 @@
 import "./styles/AddExperience.css";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Button,
   CircularProgress,
@@ -11,14 +11,16 @@ import {
 } from "@mui/material";
 import { Add, PhotoCamera, Upload } from "@mui/icons-material";
 import axios from "axios";
+import { AppContext } from "../states/AppContext";
 
 const experienceTypes = ["LOCATION", "SERVICE"];
 
 const AddExperience = ({ open, setOpen }) => {
+const [{experience},dispatch] = useContext(AppContext)
   const [isLoading, setIsLoading] = useState(false);
   const [selectedFile, setSelectedFile] = useState("");
   const [attachements, setAttachements] = useState([]);
-  const [experience, setExperience] = useState({
+  const [experienceDetails, setExperienceDetails] = useState({
     title: "",
     details: "",
     experienceType: "SERVICE",
@@ -27,8 +29,8 @@ const AddExperience = ({ open, setOpen }) => {
   const handleChange = (event) => {
     // alert("Experience sent")
 
-    setExperience({
-      ...experience,
+    setExperienceDetails({
+      ...experienceDetails,
       [event.target.name]: event.target.value,
     });
   };
@@ -71,7 +73,7 @@ const AddExperience = ({ open, setOpen }) => {
     });
 
     console.log("bodyFormData: " + bodyFormData);
-    bodyFormData.append("experience", JSON.stringify(experience));
+    bodyFormData.append("experience", JSON.stringify(experienceDetails));
     console.log("bodyFormData: " + bodyFormData);
 
     axios({
@@ -82,8 +84,17 @@ const AddExperience = ({ open, setOpen }) => {
     })
       .then((res) => {
         if (res.status === 200) {
+            dispatch({
+                type: "LOAD_EXPERIENCES",
+                payload: [
+                    res.data,
+                    ...experience
+                ]
+
+            })
+
           setAttachements([]);
-          setExperience({
+          setExperienceDetails({
             title: "",
             details: "",
             experienceType: "SERVICE",
@@ -92,8 +103,6 @@ const AddExperience = ({ open, setOpen }) => {
           setIsLoading(false);
         }
 
-        setIsLoading(false);
-        alert("Problem occured when submiting ");
       })
       .catch((err) => {
         console.log(err.response.data);
@@ -112,12 +121,11 @@ const AddExperience = ({ open, setOpen }) => {
               name="experienceType"
               select
               label="Experience Type"
-              value={experience.experienceType}
+              value={experienceDetails.experienceType}
               onChange={handleChange}
               SelectProps={{
                 native: true,
               }}
-              // helperText="Please select your currency"
               fullWidth
             >
               {experienceTypes.map((type, index) => (
@@ -133,12 +141,8 @@ const AddExperience = ({ open, setOpen }) => {
               name="title"
               label="Title"
               fullWidth
-              value={experience.title}
+              value={experienceDetails.title}
               onChange={handleChange}
-              //   helperText="please provide your sharehub password"
-              //   type="password"
-              //   style={{ width: "100%" }}
-              //   error={loginError.passwordError}
             />
 
             <br />
@@ -149,13 +153,9 @@ const AddExperience = ({ open, setOpen }) => {
               label="Details "
               fullWidth
               multiline
-              rows={5}
-              value={experience.details}
+              minRows={5}
+              value={experienceDetails.details}
               onChange={handleChange}
-              //   helperText="please provide your sharehub password"
-              //   type="password"
-              //   style={{ width: "100%" }}
-              //   error={loginError.passwordError}
             />
 
             <br />
@@ -197,14 +197,6 @@ const AddExperience = ({ open, setOpen }) => {
                     <Add sx={{ margin: "auto" }} fontSize="large" />
                   </IconButton>
                 </label>
-                {/* <Input
-                accept="image/*"
-                name="fileToUpload"
-                value={selectedFile}
-                type="file"
-                onChange={handleChange}
-              />
-              <Add sx={{ margin: "auto" }} fontSize="large" /> */}
               </div>
             </div>
 

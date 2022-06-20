@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -12,31 +12,55 @@ import Authenticate from "./pages/authenticate/Authenticate";
 import ForgetPassword from "./pages/forgotPassword/ForgetPassword";
 import MainApp from "./pages/MainApp/MainApp";
 import ProtectedRoute from "./utilities/ProtectedRoute";
-import axios from 'axios';
+import axios from "axios";
 import { AppContext } from "./states/AppContext";
 import AuthVerify from "./utilities/AuthVerify";
 import ConfirmEmail from "./pages/confirmEmail/ConfirmEmail";
+import { decodeToken } from "./utilities/Utilities";
 
 const AUTH_TOKEN = localStorage.getItem("token");
-axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
-axios.defaults.baseURL = 'http://localhost:9999';
+axios.defaults.headers.common["Authorization"] = AUTH_TOKEN;
+axios.defaults.baseURL = "http://localhost:9999";
 
-const RedirectToHome = ()=>{
-
+const RedirectToHome = () => {
   return <Navigate to="/" replace />;
-}
+};
+
+const token = localStorage.getItem("token");
 
 const App = () => {
   const [state, dispatch] = useContext(AppContext);
-  const {isAuthenticated} = state;
-  
+  const { isAuthenticated } = state;
+
+  useEffect(() => {
+    if (!!token) {
+     
+          axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+
+          const currentUser = decodeToken(token);
+
+          dispatch({
+            type: "CURRENT_USER",
+            payload: currentUser,
+          });
+
+          dispatch({
+            type: "LOGIN",
+            payload: true,
+          });
+    }
+
+    return () => {};
+  }, []);
+
   return (
     <div className="app">
       <Router>
         <Routes>
-          <Route path="/authenticate" element={
-            isAuthenticated ? <RedirectToHome/> : <Authenticate />
-          } />
+          <Route
+            path="/authenticate"
+            element={isAuthenticated ? <RedirectToHome /> : <Authenticate />}
+          />
 
           <Route
             path="/"
@@ -47,7 +71,7 @@ const App = () => {
             }
           />
 
-          <Route path = '/confirm-email' element={<ConfirmEmail />} />
+          <Route path="/confirm-email" element={<ConfirmEmail />} />
           <Route path="/forgot-password" element={<ForgetPassword />} />
         </Routes>
         {/* <AuthVerify /> */}

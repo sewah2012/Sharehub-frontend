@@ -1,130 +1,125 @@
-.auth{
-    height: 100vh;
-    width: 100vw;
-    background-color: #F5F5F5;
-    display: flex;
-    flex-direction: column;
-    /* align-items: center; */
-    justify-content: space-between;
+.auth {
+  height: fit-content;
+  width: fit-content;
+  padding-top: 20%;
+
 }
 
-.auth__main{
+.auth__main {
+    margin-top: 10%;
+  padding: 1rem;
+  
+}
+.auth__main-left > img {
+  width: 15rem;
+}
+
+.auth__main-left {
+    margin: 0;
+  /* padding: 1rem; */
+  width: 100%;
+  color: #8a8e9d;
+  text-align: justify;
+}
+
+.auth__main-left p {
+  margin: 0.5rem;
+  font-size: .8rem;
+}
+
+.auth__main-right {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.modalWrapper {
+  /* height: 100%; */
+  /* background-color: aqua; */
+  width: fit-content;
+}
+
+.signupModalForm {
+  background-color: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+  margin: 2rem;
+  padding: 2rem 1rem;
+  align-items: center;
+  height: 80%;
+  overflow-y: scroll;
+  /* width: 25rem; */
+}
+
+.signupModalForm .signupTextfield {
+  width: 100%;
+}
+
+@media only screen and (min-width: 854px) {
+  .auth {
+    height: fit-content;
+    width: fit-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #f5f5f5;
+  }
+
+  .auth__main {
     margin: auto;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     flex-wrap: wrap;
-    
-}
- .auth__main-left > img {
-    width: 15rem;
   }
 
-  .auth__main-left{
-      margin: .5rem;
-      width: 90%;
-      color: #8A8E9D;
-      
-  }
-  
-  .auth__main-left p{
-      margin: .5rem 0rem;
-      font-size: 1rem;
+  .auth__main-left {
+    margin: 3rem;
+    width: 40%;
+    color: #8a8e9d;
   }
 
-  .auth__main-right{
-      width: 90%;
-      margin: .5rem;
-  
+  .auth__main-left p {
+    margin: 2rem 0.5rem;
+    font-size: 1.5rem;
   }
 
-  .signupModalForm{
-    background-color: #F5F5F5;
+  .auth__main-right {
+    width: 25rem;
+  }
+  .auth__footer {
     display: flex;
-    flex-direction: column;
-    margin: 1rem;
-    padding: 1rem;
-    align-items: center;
-    height: 90vh;
+    justify-content: space-between;
+    color: #f5f5f5;
+    height: 3rem;
+    background-color: black;
+    padding: 0.5rem 2rem;
+  }
+
+  /* signup sytle  */
+  .signupModalForm {
+    background-color: #f5f5f5;
+    /* background-color: red; */
+    /* display: flex; */
+    padding: 2rem;
+    width: fit-content;
+    /* align-items: center; */
+    position: absolute;
+    top: 10vh;
+    left: 60vw;
+    /* transform: "translate(-50%,-50%)";  */
+    border: 2px solid #000;
+    box-shadow: 24;
+    height: 60%;
     overflow-y: scroll;
-    /* width: 25rem; */
   }
 
-  .signupModalForm .signupTextfield{
-    width: 100%;
-  }
-@media only screen and (min-width: 600px) {
-   
-    .auth{
-        height: 100vh;
-        width: 100vw;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        background-color: #F5F5F5;
-    }
-    
-    .auth__main{
-        margin: auto;
-        display: flex;
-        justify-content: space-evenly;
-        align-items: center;
-        flex-wrap: wrap;
-        
-    }
-    
-    .auth__main-left{
-        margin: 3rem;
-        width: 40%;
-        color: #8A8E9D;
-    }
-    
-    .auth__main-left p{
-        margin: 2rem .5rem;
-        font-size: 1.5rem;
-    }
-    
-    .auth__main-right{
-        width: 25rem;
-    
-    }
-    .auth__footer{
-        display: flex;
-        justify-content: space-between;
-        color: #F5F5F5;
-        height: 3rem;
-        background-color: black;
-        padding: .5rem 2rem;
-        
-    }
-
-    /* signup sytle  */
-    .signupModalForm{
-        background-color: #F5F5F5;
-        /* background-color: red; */
-        /* display: flex; */
-        padding: 2rem;
-        width: fit-content;
-        /* align-items: center; */
-        position: absolute;
-        top: 10vh;
-        left: 60vw;
-        /* transform: "translate(-50%,-50%)";  */
-        border: 2px solid #000;
-        box-shadow: 24;
-        height: 60%;
-        overflow-y: scroll;
-
-      }
-
-      /* signupTextfield{
+  /* signupTextfield{
         width: fit-content;
       } */
 
-        .modalWrapper{
-            height: 100%;
-            background-color: aqua;
-            width: fit-content;
-        }
-    
+  .modalWrapper {
+    height: 100%;
+    background-color: aqua;
+    width: fit-content;
   }
+}

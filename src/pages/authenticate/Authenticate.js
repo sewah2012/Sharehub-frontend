@@ -45,7 +45,9 @@ const Authenticate = () => {
 
   
 
-  const onSubmit = () => {
+  const onSubmit = (event) => {
+    event.preventDefault()
+    localStorage.removeItem("token");
     setLoading(true);
     let { username, password } = loginDetails;
     if (username === "") {
@@ -151,15 +153,16 @@ const Authenticate = () => {
         </div>
 
         <div className="auth__main-right">
-          <Paper style={{ width: "100%", padding: ".5rem" }}>
+          <Paper style={{ padding: "1rem"}}>
             <TextField
               name="username"
               label="Username"
               value={loginDetails.username}
               onChange={onChangeHandler}
               helperText="please provide your sharehub username"
-              style={{ width: "100%" }}
+              fullWidth
               error={loginError.username}
+              autoFocus={false}
             />
             <br />
             <br />
@@ -170,8 +173,9 @@ const Authenticate = () => {
               onChange={onChangeHandler}
               helperText="please provide your sharehub password"
               type="password"
-              style={{ width: "100%" }}
+              fullWidth
               error={loginError.password}
+              autoFocus={false}
             />
             <br />
             <br />
