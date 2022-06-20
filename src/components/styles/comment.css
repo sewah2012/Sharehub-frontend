@@ -1,7 +1,8 @@
 .comment{
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
+
 }
 
 .comment_details{
@@ -11,4 +12,16 @@
 }
 .description{
     margin: 0 .5rem;
+    flex: 1;
+    text-align: left;
+}
+
+.description  p{
+   /* margin-right: .5rem; */
+   text-align: left;
+}
+
+.action{
+    width: 25%;
+    text-align: left;
 }

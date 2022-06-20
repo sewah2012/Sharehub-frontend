@@ -161,13 +161,13 @@ const SignupModal = ({ modalOpen, setModalOpen }) => {
       
     })
     .catch(err=>{
-      console.log(err)
+      console.log(err.response.data)
     })
   };
   return (
     <div className="modalWrapper">
       <Modal
-        // sx={{height: "100%"}}
+        // sx={{height: "100vh"}}
         open={modalOpen}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"

@@ -1,22 +1,66 @@
 import "./styles/experience.css";
-import React, { useState } from "react";
-import { Avatar, Button, Divider, IconButton } from "@mui/material";
+import React, { useContext, useState } from "react";
+import {
+  Avatar,
+  Button,
+  Divider,
+  IconButton,
+  LinearProgress,
+} from "@mui/material";
 import {
   AddComment,
   Favorite,
   FavoriteBorder,
   FavoriteBorderOutlined,
+  MoreVert,
 } from "@mui/icons-material";
 
-import Comment from "./Comment";
+import ReactTimeago from "react-timeago";
 
-const Experience = () => {
-  const [isLiked, setIsLiked] = useState(false);
-  const [showComments, setShowComments] = useState(true);
+import Comment from "./Comment";
+import { AppContext } from "../states/AppContext";
+import axios from "axios";
+import MoreVertPopUp from "./MoreVertPopUp";
+
+import { useDetectClickOutside } from "react-detect-click-outside";
+import isOwnerOrAdmin from "../utilities/OwnerOrAdmin";
+import SimpleImageSlider from "react-simple-image-slider";
+
+
+const Experience = ({ experience }) => {
+  const [showComments, setShowComments] = useState(false);
   const [comment, setComment] = useState("");
   const [commentError, setcommentError] = useState(false);
+  const [{ currentUser }, dispatch] = useContext(AppContext);
+  const [isLiked, setIsLiked] = useState(
+    experience.likes.includes(currentUser.sub)
+  );
 
+  const [likeCount, setLikeCount] = useState(experience.likes.length);
+  const [commentCount, setCommentCount] = useState(experience.comments.length);
+
+  const [commentsList, setcommentsList] = useState(experience.comments);
+  const [loading, setLoading] = useState(false);
+  const [openExpMoreVert, setOpenExpMoreVert] = useState(false);
+
+  const ref = useDetectClickOutside({
+    onTriggered: () => setOpenExpMoreVert(false),
+  });
+
+  const handleOpenExpMoreVert = () => {
+    setOpenExpMoreVert(!openExpMoreVert);
+  };
   const handleLike = () => {
+    const url = `/api/reaction/likeUnlike/${experience.id}`;
+    axios.get(url).then((resp) => {
+      if (resp.status === 200) {
+        if (isLiked) {
+          setLikeCount(likeCount - 1);
+        } else {
+          setLikeCount(likeCount + 1);
+        }
+      }
+    });
     setIsLiked(!isLiked);
   };
 
@@ -25,66 +69,126 @@ const Experience = () => {
   };
 
   const handleSubmitComment = () => {
+    setLoading(true);
     if (comment === "") {
       setcommentError(true);
+      setLoading(false);
       return;
     }
 
-    alert(comment);
-    setComment("");
+    const url = "/api/reaction/comment";
+    const data = {
+      description: comment,
+      experience: {
+        id: experience.id,
+      },
+    };
+    axios
+      .post(url, data)
+      .then((resp) => {
+        if (resp.status === 200) {
+          setcommentsList([resp.data, ...commentsList]);
+          setCommentCount(commentCount + 1);
+        }
+        setLoading(false);
+        setComment("");
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+        setLoading(false);
+        setComment("");
+      });
   };
 
+  const likes = experience.likes;
+  const comments = experience.comments;
+
+  const deleteExperience = () => {
+    setOpenExpMoreVert(!openExpMoreVert);
+
+    alert("delete experience");
+  };
+
+  const editExperience = () => {
+    setOpenExpMoreVert(!openExpMoreVert);
+    alert("edit Experience");
+  };
+
+  const expActionsOptions = [
+    {
+      title: "Delete",
+      action: deleteExperience,
+    },
+
+    {
+      title: "Edit",
+      action: editExperience,
+    },
+  ];
+
+  const images = []
+  
+ experience.attachments.forEach(att =>{
+        images.push({
+          url: att.attachmentUrl
+        })
+
+    })
+
+console.log(images)
   return (
     <div className="experience">
       <div className="experience__header">
-        <Avatar alt="Experience_owner" src="https://picsum.photos/200" />
+        <Avatar
+          alt={experience.author.firstName}
+          src={experience.author.imageUrl}
+        />
         <div className="experience__header-info">
           <div className="experience__authorInfo">
-            <h4>Queen Sheeba</h4>
-            <p>sewah2012@gmail.com</p>
+            <h4>{experience.author.username}</h4>
+            <p>
+              <ReactTimeago date={experience.creationDate} />
+            </p>
           </div>
-          <div className="experience__action">
-            <p>1 hr ago</p>
-            <p>|</p>
-          </div>
+          {isOwnerOrAdmin(currentUser, experience.author.username) && (
+            <div className="experience__action" ref={ref}>
+              <IconButton onClick={handleOpenExpMoreVert}>
+                <MoreVert />{" "}
+              </IconButton>
+              {openExpMoreVert && (
+                <div className="experience__action-morevertpopup">
+                  <MoreVertPopUp options={expActionsOptions} />
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
       <Divider />
       <div className="experience__content">
-        <h2>An Experience with Tour Maroc</h2>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam,
-          enim! Tempore non a doloribus voluptate, vero culpa maiores ad
-          reiciendis deleniti veniam hic officia quisquam laborum fugit iusto.
-          Dolor, sit! Autem quod accusantium eius quae consequuntur, nam in
-          laborum explicabo nemo veritatis suscipit nostrum quia maxime? Quas
-          voluptatum non sed? Blanditiis cumque recusandae architecto reiciendis
-          ipsam reprehenderit dignissimos necessitatibus distinctio. Repudiandae
-          deleniti omnis officia. Optio unde qui iure libero suscipit, facilis
-          omnis magnam sequi ipsum! Nihil eveniet quos dicta excepturi, iure
-          eius. Dignissimos officiis nemo, possimus rem nulla libero hic!
-          Exercitationem saepe aperiam eos, quasi accusantium distinctio,
-          consequuntur itaque quaerat nostrum voluptatum quibusdam. Veniam minus
-          sed, perferendis provident magni libero rerum, enim labore vero quidem
-          eos possimus ipsum explicabo dolore? Nesciunt rem porro dolorum est
-          doloremque, sint, ea exercitationem, quasi autem rerum esse! Iusto ab
-          alias, illo sequi eius exercitationem provident placeat voluptatum
-          quis ipsam nobis labore necessitatibus autem sint.
-        </p>
+        <h2>{experience.title}</h2>
+        <p>{experience.details}</p>
         <div className="experience__content-images">
-          <img src="https://picsum.photos/500/300" alt="imgs" />
+          <SimpleImageSlider
+            width={350}
+            height={300}
+            images={images}
+            showBullets={true}
+            showNavs={true}
+          />
+          {/* <img src="https://picsum.photos/500/300" alt="imgs" /> */}
         </div>
 
         <div className="">
           <div className="experience__content-reactions">
             <div className="likes">
-              <p>50</p>{" "}
+              <p>{likeCount}</p>{" "}
               <IconButton onClick={handleLike}>
                 {isLiked ? <Favorite /> : <FavoriteBorder />}
               </IconButton>
             </div>
             <div className="comments">
-              <p>10 comments</p>
+              <p>{commentCount} comments</p>
               <IconButton onClick={handleShowComments}>
                 {" "}
                 <AddComment />
@@ -102,6 +206,7 @@ const Experience = () => {
                   You have not written any comment yet.
                 </p>
               )}
+              {loading && <LinearProgress />}
               <div className="add_comment">
                 <input
                   type="text"
@@ -112,13 +217,23 @@ const Experience = () => {
                     setComment(e.target.value);
                   }}
                   placeholder="write your comment here ..."
+                  autoFocus={false}
+                  autoComplete={false}
                 />
                 <Button onClick={handleSubmitComment} sx={{ color: "#2A2A48" }}>
                   Publish
                 </Button>
               </div>
               <div className="commentsList">
-                <Comment username = "John" imgUrl = "" comment="description" dateCreated="10 mins"/>
+                {commentsList.map((c) => (
+                  <Comment
+                    key={c?.id}
+                    username={c.author?.username}
+                    imgUrl={c.author?.imageUrl}
+                    comment={c?.description}
+                    dateCreated={c?.creationDate}
+                  />
+                ))}
               </div>
             </div>
           )}
