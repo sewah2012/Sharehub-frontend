@@ -30,6 +30,7 @@ const ConfirmCodePage = ({ codeMessage, confirmMessage, type }) => {
           setLoading(false);
         } else {
           console.log(resp.data);
+          setLoading(false);
         }
       })
       .catch((err) => {
