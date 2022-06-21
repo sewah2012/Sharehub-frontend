@@ -20,7 +20,9 @@ import { decodeToken } from "./utilities/Utilities";
 
 const AUTH_TOKEN = localStorage.getItem("token");
 axios.defaults.headers.common["Authorization"] = AUTH_TOKEN;
-axios.defaults.baseURL = "http://localhost:9999";
+
+const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT || 'https://api-dev-sharehub.herokuapp.com';
+axios.defaults.baseURL = API_ENDPOINT;
 
 const RedirectToHome = () => {
   return <Navigate to="/" replace />;
