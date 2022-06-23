@@ -107,6 +107,7 @@ const [{experience},dispatch] = useContext(AppContext)
       })
       .catch((err) => {
         console.log(err.response.data);
+        alert("error occured")
         setIsLoading(false);
       });
 
