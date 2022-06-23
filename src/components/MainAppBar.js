@@ -12,6 +12,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { Search } from "@mui/icons-material";
 import { AppContext } from "./../states/AppContext";
+import { Link } from "react-router-dom";
 
 const MainAppBar = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -54,11 +55,13 @@ const MainAppBar = () => {
               objectFit: "contained",
             }}
           >
+            <Link to= "/">
             <img
               src="/assets/imgs/logo2.svg"
               alt="share_hub_logo"
               style={{ width: "100%", height: "100%" }}
             />
+            </Link>
           </Box>
 
           <Box>

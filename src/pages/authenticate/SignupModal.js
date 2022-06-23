@@ -16,6 +16,7 @@ import {
 import { Box } from "@mui/system";
 import axios from "axios";
 import { useNavigate } from "react-router-dom"
+import CompleteRegistration from "../../components/CompleteRegistration";
 
 const style = {
   position: "absolute",
@@ -173,6 +174,7 @@ const SignupModal = ({ modalOpen, setModalOpen }) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
+       
         <div className="signupModalForm">
           <Typography id="modal-modal-title" variant="h4" component="h2">
             Setup an Account
@@ -184,7 +186,6 @@ const SignupModal = ({ modalOpen, setModalOpen }) => {
               className="signupTextfield"
               name="firstName"
               label="First Name"
-              defaultValue=""
               helperText="please provide your first name"
               error={errors?.firstName ? errors?.firstName : false}
               style={{ margin: ".1rem" }}
@@ -195,7 +196,6 @@ const SignupModal = ({ modalOpen, setModalOpen }) => {
               className="signupTextfield"
               name="lastName"
               label="Last Name"
-              defaultValue=""
               helperText="please provide your last name"
               style={{ margin: ".1rem" }}
               error={errors?.lastName ? errors?.lastName : false}
@@ -225,18 +225,6 @@ const SignupModal = ({ modalOpen, setModalOpen }) => {
               style={{ margin: ".1rem" }}
               error={errors?.username ? errors?.username : false}
             />
-
-            {/* <TextField
-            name="dateOfBirth"
-            label="Birthday"
-            type="date"
-            defaultValue="1998-08-22"
-            helperText="please select your birthdate"
-            style={{ margin: ".1rem" }}
-            InputLabelProps={{
-              shrink: true,
-            }}
-          /> */}
             <br />
             <br />
             <TextField
