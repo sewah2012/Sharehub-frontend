@@ -101,6 +101,7 @@ const [{experience},dispatch] = useContext(AppContext)
           });
 
           setIsLoading(false);
+          setOpen(!open);
         }
 
       })
@@ -109,7 +110,7 @@ const [{experience},dispatch] = useContext(AppContext)
         setIsLoading(false);
       });
 
-    setOpen(!open);
+   
   };
   return (
     <div className="addExp">
