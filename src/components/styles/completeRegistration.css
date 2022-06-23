@@ -1,0 +1,25 @@
+.completeRegistration{
+    padding: 1.5rem;
+    background-color: white;
+    z-index: 99;
+}
+
+.completeRegistration__form{
+    margin-top: 1rem;
+}
+
+.profile_pic{
+    display: flex;
+    justify-content: space-around;
+}
+
+.profile_pic_preview{
+    border: 1px solid gray;
+    width: 5rem;
+    height: 5rem;
+}
+.profile_pic_preview img{
+    width: inherit;
+    height: inherit;
+
+}

@@ -134,8 +134,6 @@ const Experience = ({ experience }) => {
         })
 
     })
-
-console.log(images)
   return (
     <div className="experience">
       <div className="experience__header">

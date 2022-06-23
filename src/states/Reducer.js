@@ -23,6 +23,21 @@ export default function reducer(state, action) {
         ...state,
         experience: action.payload,
       };
+    case "LOAD_CURRENT_USER_DETAILS":
+      return{
+        ...state,
+        currentUserDetails: action.payload
+      }
+
+    case "REGISTRATION_COMPLETE": 
+      return {
+        ...state,
+        currentUserDetails: {
+          ...state.currentUserDetails,
+          registrationCompleted: action.payload
+        }
+      }
+   
     
     default:
       return state;
