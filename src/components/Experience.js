@@ -14,9 +14,6 @@ import {
   FavoriteBorderOutlined,
   MoreVert,
 } from "@mui/icons-material";
-
-import ReactTimeago from "react-timeago";
-
 import Comment from "./Comment";
 import { AppContext } from "../states/AppContext";
 import axios from "axios";
@@ -146,8 +143,6 @@ const Experience = ({ experience }) => {
           <div className="experience__authorInfo">
             <h4>{experience.author.username}</h4>
             <p>
-              {/* <ReactTimeago date={experience.creationDate} /> */}
-
               {moment(experience.creationDate).fromNow()}
             </p>
           </div>
