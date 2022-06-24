@@ -25,6 +25,7 @@ import MoreVertPopUp from "./MoreVertPopUp";
 import { useDetectClickOutside } from "react-detect-click-outside";
 import isOwnerOrAdmin from "../utilities/OwnerOrAdmin";
 import SimpleImageSlider from "react-simple-image-slider";
+import moment from 'moment'
 
 
 const Experience = ({ experience }) => {
@@ -145,7 +146,9 @@ const Experience = ({ experience }) => {
           <div className="experience__authorInfo">
             <h4>{experience.author.username}</h4>
             <p>
-              <ReactTimeago date={experience.creationDate} />
+              {/* <ReactTimeago date={experience.creationDate} /> */}
+
+              {moment(experience.creationDate).fromNow()}
             </p>
           </div>
           {isOwnerOrAdmin(currentUser, experience.author.username) && (
