@@ -12,6 +12,8 @@ const PopularExperiences = () => {
     const url = "/api/experience/list";
   
     useEffect(() => {
+
+    //    const popularExp = experience
       axios
         .get(url)
         .then((resp) => {
@@ -20,6 +22,8 @@ const PopularExperiences = () => {
               type: "LOAD_EXPERIENCES",
               payload: resp.data,
             });
+
+            
   
             setLoading(false);
   
