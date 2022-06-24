@@ -1,7 +1,7 @@
 import "./styles/comment.css";
 import React from "react";
 import { Avatar } from "@mui/material";
-import ReactTimeago from "react-timeago";
+import moment from "moment";
 
 const Comment = ({ comment, imgUrl, username, dateCreated }) => {
   return (
@@ -18,7 +18,7 @@ const Comment = ({ comment, imgUrl, username, dateCreated }) => {
       </div>
 
       <div className="action">
-        <ReactTimeago date = {dateCreated} />
+        {moment(dateCreated).fromNow()}
       </div>
     </div>
   );
