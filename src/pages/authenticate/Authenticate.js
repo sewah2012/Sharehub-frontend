@@ -108,7 +108,7 @@ const Authenticate = () => {
        const error = err.response.data;
 
           
-        if(error.message==="Bad credentials"){
+        if(error?.message==="Bad credentials"){
           setLoginError({
             ...loginError,
             password: true,
@@ -118,7 +118,7 @@ const Authenticate = () => {
           return
         }
 
-        if(error.message==="An error occured while processing request"){
+        if(error?.message==="An error occured while processing request"){
           setLoginError({
             ...loginError,
             username: true,

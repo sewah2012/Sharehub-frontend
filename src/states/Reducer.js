@@ -37,6 +37,13 @@ export default function reducer(state, action) {
           registrationCompleted: action.payload
         }
       }
+
+    // case "LOAD_POPULAR_EXPERIENCES":
+    //   return {
+    //     ...state,
+    //     // latestExperience: state.experience.filter(ex=>ex)
+
+    //   }
    
     
     default:

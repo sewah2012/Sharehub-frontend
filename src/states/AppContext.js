@@ -8,7 +8,8 @@ const initialState =
         isAuthenticated:false,
         experience:[],
         currentUser: {},
-        currentUserDetails:{}
+        currentUserDetails:{},
+        latestExperiences: []
     }
 
 export  const AppProvider=(props)=>{

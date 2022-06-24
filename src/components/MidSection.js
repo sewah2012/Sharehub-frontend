@@ -3,49 +3,60 @@ import React, { useContext, useEffect, useState } from "react";
 import Experience from "./Experience";
 import { AppContext } from "../states/AppContext";
 import axios from "axios";
-import { LinearProgress } from "@mui/material";
+import { AppBar, LinearProgress, Toolbar } from "@mui/material";
+import AllExperiences from "./AllExperiences";
+import PopularExperiences from "./PopularExperiences";
+import LatestExperiences from "./LatestExperiences";
 
 const MidSection = () => {
-  const [state, dispatch] = useContext(AppContext);
-  const { experience } = state;
+ 
+  const [latest, setLatest] = useState(false);
+  const [popular, setPopular] = useState(false);
+  const [all, setAll] = useState(true);
 
-  const [loading, setLoading] = useState(false);
-  const url = "/api/experience/list";
-  useEffect(() => {
-    
-
-    axios
-      .get(url)
-      .then((resp) => {
-        if (resp.status === 200) {
-          dispatch({
-            type: "LOAD_EXPERIENCES",
-            payload: resp.data,
-          });
-
-          setLoading(false)
-
-          console.log(resp.data);
-        }
-      })
-      .catch((err) => {
-        console.log(err.response.data);
-      });
-  }, []);
+ 
 
   return (
     <div className="midSection">
       <div className="midSection__filter">
-        <h1>Latest Shared experience</h1>
+        <div className="switches">
+          <div
+            onClick={() => {
+              setPopular(false);
+              setLatest(false);
+              setAll(true);
+            }}
+            className={all ? "switch active" : "switch"}
+          >
+            <h4>All</h4>
+          </div>
+          <div
+            onClick={() => {
+              setPopular(false);
+              setAll(false);
+              setLatest(true);
+            }}
+            className={latest ? "switch active" : "switch"}
+          >
+            <h4>Latest</h4>
+          </div>
+
+          <div
+            onClick={() => {
+              setAll(false);
+              setLatest(false);
+              setPopular(true);
+            }}
+            className={popular ? "switch active" : "switch"}
+          >
+            <h4>Popular</h4>
+          </div>
+        </div>
       </div>
       <div className="mid_ection__experienceList">
-        {loading? (
-          <LinearProgress />
-        ) : (
-          experience.map((ex) => (
-            <Experience key={ex.id} experience={ex} />
-          ))
-        )}
+        {all && <AllExperiences />}
+        {latest && <PopularExperiences />}
+        {popular && <LatestExperiences />}
       </div>
     </div>
   );
