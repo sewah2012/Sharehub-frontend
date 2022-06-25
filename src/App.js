@@ -20,6 +20,7 @@ import { decodeToken } from "./utilities/Utilities";
 
 const AUTH_TOKEN = localStorage.getItem("token");
 axios.defaults.headers.common["Authorization"] = AUTH_TOKEN;
+axios.defaults.headers.common["TIMEZONE_HEADER_NAME"] = (new Date()).getTimezoneOffset();;
 
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT || 'https://api-dev-sharehub.herokuapp.com';
 axios.defaults.baseURL = API_ENDPOINT;
@@ -28,8 +29,9 @@ const RedirectToHome = () => {
   return <Navigate to="/" replace />;
 };
 
-const token = localStorage.getItem("token");
+// const token = localStorage.getItem("token");
 
+console.log((new Date()).getTimezoneOffset())
 const App = () => {
   const [state, dispatch] = useContext(AppContext);
   const { isAuthenticated } = state;
