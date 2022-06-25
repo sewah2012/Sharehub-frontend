@@ -29,9 +29,9 @@ const RedirectToHome = () => {
   return <Navigate to="/" replace />;
 };
 
-// const token = localStorage.getItem("token");
+const token = localStorage.getItem("token");
 
-console.log((new Date()).getTimezoneOffset())
+// console.log((new Date()).getTimezoneOffset())
 const App = () => {
   const [state, dispatch] = useContext(AppContext);
   const { isAuthenticated } = state;
