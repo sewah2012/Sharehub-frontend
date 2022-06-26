@@ -205,7 +205,7 @@ const Authenticate = () => {
             </Button>
           </Paper>
         </div>
-        <SignupModal modalOpen={openModal} setModalOpen={setopenModal} />
+       
       </div>
       {/* <div className="auth__footer">
         <Typography variant="h4">
@@ -216,6 +216,7 @@ const Authenticate = () => {
           Supervised by: Prof. Yassine
         </Typography>
       </div> */}
+       <SignupModal modalOpen={openModal} setModalOpen={setopenModal} />
     </div>
   );
 };

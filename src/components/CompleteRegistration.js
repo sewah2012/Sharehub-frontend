@@ -20,6 +20,11 @@ const CompleteRegistration = () => {
   const [preview, setPreview] = useState("");
 
   const handleImageUpload = (event) => {
+    setErrors({
+      ...errors,
+      profilePicture: false
+    })
+
     var file = event.target.files[0];
 
     console.log(file);
@@ -63,6 +68,16 @@ const CompleteRegistration = () => {
       setIsLoading(false);
       return;
     }
+
+    if(selectedFile ===""){
+      setErrors({
+        ...errors,
+        profilePicture: true
+      })
+      setIsLoading(false);
+      return
+    }
+
     const formData = new FormData();
     formData.append("file", selectedFile);
     const profile_upload_url = "/api/storage/upload/image";
@@ -102,6 +117,10 @@ const CompleteRegistration = () => {
             .then((response) => {
               if (response.status === 200) {
                 // console.log(response.data);
+                dispatch({
+                  type: "LOAD_CURRENT_USER_DETAILS",
+                  payload: response.data
+                })
                 setIsLoading(false);
                 dispatch({
                   type: "REGISTRATION_COMPLETE",
@@ -215,7 +234,7 @@ const CompleteRegistration = () => {
             <img src={preview} alt="selected Profile picture" />
           </div>
         </div>
-
+          { errors.profilePicture && <p style={{color:"red"}}>Please upload a profile picture</p>}
         <br />
         <br />
 
