@@ -36,7 +36,7 @@ const AllExperiences = () => {
          {loading ? (
           <LinearProgress />
         ) : (
-          experience.map((ex) => <Experience key={ex.id} exp={ex} />)
+          experience?.map((ex) => <Experience key={ex.id} exp={ex} />)
         )}
     </div>
   )
