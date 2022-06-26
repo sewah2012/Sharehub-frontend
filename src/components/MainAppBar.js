@@ -82,7 +82,7 @@ const MainAppBar = () => {
           <Box>
             <Tooltip title="view profile">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt={currentUserDetails.firstName} src={currentUserDetails.imageUrl.attachmentUrl} />
+                <Avatar alt={currentUserDetails.firstName} src={currentUserDetails?.imageUrl?.attachmentUrl} />
               </IconButton>
             </Tooltip>
             <Menu
