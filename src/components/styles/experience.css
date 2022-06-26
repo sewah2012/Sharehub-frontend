@@ -107,7 +107,7 @@
     }
 
     .experience__content-images{
-        width: 90%;
+        width: inherit;
         height: fit-content;
         /* background: violet; */
        
