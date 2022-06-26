@@ -72,7 +72,10 @@ const MainApp = () => {
                       : "mainApp_midSection_addContainer display openShare"
                   }
                 >
-                  <AddExperience open={mobile} setOpen={setMobile} />
+                  <div className="add_exp_form">
+                     <AddExperience open={mobile} setOpen={setMobile} />
+                  </div>
+                 
                 </div>
               </div>
 

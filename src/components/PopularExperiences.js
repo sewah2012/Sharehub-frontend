@@ -7,7 +7,7 @@ import Experience from './Experience';
 
 const PopularExperiences = () => {
     const [state, dispatch] = useContext(AppContext);
-    const { experience } = state;
+    const { popularExperiences } = state;
     const [loading, setLoading] = useState(false);
     const url = "/api/experience/list";
   
@@ -19,15 +19,10 @@ const PopularExperiences = () => {
         .then((resp) => {
           if (resp.status === 200) {
             dispatch({
-              type: "LOAD_EXPERIENCES",
+              type: "LOAD_POPULAR_EXPERIENCES",
               payload: resp.data,
             });
-
-            
-  
             setLoading(false);
-  
-            console.log(resp.data);
           }
         })
         .catch((err) => {
@@ -39,7 +34,7 @@ const PopularExperiences = () => {
          {loading ? (
           <LinearProgress />
         ) : (
-          experience.map((ex) => <Experience key={ex.id} experience={ex} />)
+          popularExperiences.map((ex) => <Experience key={ex.id} exp={ex} />)
         )}
     </div>
   )

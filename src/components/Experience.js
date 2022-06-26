@@ -11,7 +11,6 @@ import {
   AddComment,
   Favorite,
   FavoriteBorder,
-  FavoriteBorderOutlined,
   MoreVert,
 } from "@mui/icons-material";
 import Comment from "./Comment";
@@ -21,25 +20,28 @@ import MoreVertPopUp from "./MoreVertPopUp";
 
 import { useDetectClickOutside } from "react-detect-click-outside";
 import isOwnerOrAdmin from "../utilities/OwnerOrAdmin";
-import SimpleImageSlider from "react-simple-image-slider";
-import moment from 'moment'
+import moment from "moment";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from "react-responsive-carousel";
+import DeleteAlertDialog from "./DeleteAlertDialog";
 
-
-const Experience = ({ experience }) => {
+const Experience = ({ exp }) => {
   const [showComments, setShowComments] = useState(false);
   const [comment, setComment] = useState("");
   const [commentError, setcommentError] = useState(false);
-  const [{ currentUser }, dispatch] = useContext(AppContext);
+  const [state, dispatch] = useContext(AppContext);
+  const { currentUser,experience} = state;
   const [isLiked, setIsLiked] = useState(
-    experience.likes.includes(currentUser.sub)
+    exp.likes.includes(currentUser.sub)
   );
 
-  const [likeCount, setLikeCount] = useState(experience.likes.length);
-  const [commentCount, setCommentCount] = useState(experience.comments.length);
+  const [likeCount, setLikeCount] = useState(exp.likes.length);
+  const [commentCount, setCommentCount] = useState(exp.comments.length);
 
-  const [commentsList, setcommentsList] = useState(experience.comments);
+  const [commentsList, setcommentsList] = useState(exp.comments);
   const [loading, setLoading] = useState(false);
   const [openExpMoreVert, setOpenExpMoreVert] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false)
 
   const ref = useDetectClickOutside({
     onTriggered: () => setOpenExpMoreVert(false),
@@ -49,7 +51,7 @@ const Experience = ({ experience }) => {
     setOpenExpMoreVert(!openExpMoreVert);
   };
   const handleLike = () => {
-    const url = `/api/reaction/likeUnlike/${experience.id}`;
+    const url = `/api/reaction/likeUnlike/${exp.id}`;
     axios.get(url).then((resp) => {
       if (resp.status === 200) {
         if (isLiked) {
@@ -78,7 +80,7 @@ const Experience = ({ experience }) => {
     const data = {
       description: comment,
       experience: {
-        id: experience.id,
+        id: exp.id,
       },
     };
     axios
@@ -98,13 +100,46 @@ const Experience = ({ experience }) => {
       });
   };
 
-  const likes = experience.likes;
-  const comments = experience.comments;
+  const likes = exp.likes;
+  const comments = exp.comments;
+
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false)
+  const closeDeleteDialog = ()=>{
+    setOpenDeleteDialog(!openDeleteDialog)
+  }
+
+
+
+  const confirmDelete = ()=>{
+    setOpenDeleteDialog(!openDeleteDialog)
+    setIsDeleting(true)
+    const url = `/api/experience/delete/${exp.id}`;
+    axios
+      .delete(url)
+      .then((resp) => {
+        if (resp.status == 200) {
+          // alert("Experience Successfully Deleted");
+
+          const newList = experience.filter(e=>e.id!==action.payload)
+          console.log(newList)
+          dispatch({
+            type: "LOAD_EXPERIENCES",
+            Payload: newList
+          })
+
+          setIsDeleting(false)
+        }
+                
+      })
+      .catch(err=> {
+        console.log(err.response);
+        setIsDeleting(false)
+      });
+  }
 
   const deleteExperience = () => {
-    setOpenExpMoreVert(!openExpMoreVert);
-
-    alert("delete experience");
+       setOpenExpMoreVert(!openExpMoreVert);
+       setOpenDeleteDialog(!openDeleteDialog)
   };
 
   const editExperience = () => {
@@ -124,29 +159,31 @@ const Experience = ({ experience }) => {
     },
   ];
 
-  const images = []
-  
- experience.attachments.forEach(att =>{
-        images.push({
-          url: att.attachmentUrl
-        })
+  const images = [];
 
-    })
+  exp.attachments.forEach((att) => {
+    images.push({
+      url: att.attachmentUrl,
+    });
+  });
+
+ 
+
   return (
     <div className="experience">
+      {isDeleting && <LinearProgress />}
+      <DeleteAlertDialog confirmDelete = {confirmDelete} open={openDeleteDialog} handleClose={closeDeleteDialog}/>
       <div className="experience__header">
         <Avatar
-          alt={experience.author.firstName}
-          src={experience.author.imageUrl}
+          alt={exp.author.firstName}
+          src={exp.author.imageUrl}
         />
         <div className="experience__header-info">
-          <div className="experience__authorInfo">
-            <h4>{experience.author.username}</h4>
-            <p>
-              {moment(experience.creationDate).fromNow()}
-            </p>
+          <div className="exp__authorInfo">
+            <h4>{exp.author.username}</h4>
+            <p>{moment(exp.creationDate).fromNow()}</p>
           </div>
-          {isOwnerOrAdmin(currentUser, experience.author.username) && (
+          {isOwnerOrAdmin(currentUser, exp.author.username) && (
             <div className="experience__action" ref={ref}>
               <IconButton onClick={handleOpenExpMoreVert}>
                 <MoreVert />{" "}
@@ -162,17 +199,16 @@ const Experience = ({ experience }) => {
       </div>
       <Divider />
       <div className="experience__content">
-        <h2>{experience.title}</h2>
-        <p>{experience.details}</p>
+        <h2>{exp.title}</h2>
+        <p>{exp.details}</p>
         <div className="experience__content-images">
-          <SimpleImageSlider
-            width={350}
-            height={300}
-            images={images}
-            showBullets={true}
-            showNavs={true}
-          />
-          {/* <img src="https://picsum.photos/500/300" alt="imgs" /> */}
+          <Carousel showThumbs={false}>
+            {exp.attachments.map((att, index) => (
+              <div key={index}>
+                <img src={att.attachmentUrl} />
+              </div>
+            ))}
+          </Carousel>
         </div>
 
         <div className="">

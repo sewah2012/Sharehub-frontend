@@ -1,5 +1,6 @@
 .addExp{
-   /* background-color: aqua; */
+   background-color: aqua;
+   flex: 1;
 }
 
 .addExp__form-heading{
@@ -46,6 +47,11 @@
 
 
 
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 813px) {
     
+    .addExp{
+        background-color: aqua;
+        width: 100%;
+        /* width: 40rem; */
+     }
 }

@@ -38,13 +38,24 @@ export default function reducer(state, action) {
         }
       }
 
-    // case "LOAD_POPULAR_EXPERIENCES":
+    case "LOAD_POPULAR_EXPERIENCES":
+      return {
+        ...state,
+        popularExperiences: state.experience.filter(ex=>ex.likes.length > 5)
+
+      }
+    
+    case "LOAD_SHARED_EXPERIENCES": 
+      return {
+        ...state,
+        myExperiences: action.payload
+      }
+
+    // case "DELETE_EXPERIENCE":
     //   return {
     //     ...state,
-    //     // latestExperience: state.experience.filter(ex=>ex)
-
+    //     experience: 
     //   }
-   
     
     default:
       return state;

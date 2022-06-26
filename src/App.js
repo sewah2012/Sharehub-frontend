@@ -17,6 +17,7 @@ import { AppContext } from "./states/AppContext";
 import AuthVerify from "./utilities/AuthVerify";
 import ConfirmEmail from "./pages/confirmEmail/ConfirmEmail";
 import { decodeToken } from "./utilities/Utilities";
+import jwtDecode from "jwt-decode";
 
 const AUTH_TOKEN = localStorage.getItem("token");
 axios.defaults.headers.common["Authorization"] = AUTH_TOKEN;
@@ -24,6 +25,10 @@ axios.defaults.headers.common["TIMEZONE_HEADER_NAME"] = (new Date()).getTimezone
 
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT || 'https://api-dev-sharehub.herokuapp.com';
 axios.defaults.baseURL = API_ENDPOINT;
+
+// if (jwtDecode(AUTH_TOKEN).exp < Date.now() / 1000) {
+//   localStorage.clear();
+// }
 
 const RedirectToHome = () => {
   return <Navigate to="/" replace />;

@@ -7,7 +7,7 @@ import Experience from './Experience';
 
 const LatestExperiences = () => {
     const [state, dispatch] = useContext(AppContext);
-    const { experience } = state;
+    const { myExperiences } = state;
     const [loading, setLoading] = useState(false);
     const url = "/api/experience/list";
   
@@ -17,7 +17,7 @@ const LatestExperiences = () => {
         .then((resp) => {
           if (resp.status === 200) {
             dispatch({
-              type: "LOAD_EXPERIENCES",
+              type: "LOAD_SHARED_EXPERIENCES",
               payload: resp.data,
             });
   
@@ -35,7 +35,7 @@ const LatestExperiences = () => {
          {loading ? (
           <LinearProgress />
         ) : (
-          experience.map((ex) => <Experience key={ex.id} experience={ex} />)
+          myExperiences.map((ex) => <Experience key={ex.id} exp={ex} />)
         )}
     </div>
   )

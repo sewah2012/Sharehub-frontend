@@ -17,7 +17,7 @@ import { Link } from "react-router-dom";
 const MainAppBar = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const [state, dispatch] = useContext(AppContext);
+  const [{currentUserDetails}, dispatch] = useContext(AppContext);
 
 
   const handleOpenNavMenu = (event) => {
@@ -82,7 +82,7 @@ const MainAppBar = () => {
           <Box>
             <Tooltip title="view profile">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt={currentUserDetails.firstName} src={currentUserDetails.imageUrl} />
               </IconButton>
             </Tooltip>
             <Menu
