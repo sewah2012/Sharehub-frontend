@@ -1,0 +1,11 @@
+.footer{
+    height: 3rem;
+    background-color: #B8BBF9;
+
+}
+
+.footer h4{
+    padding: 1rem;
+    margin: auto;
+    width: fit-content;
+}
