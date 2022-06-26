@@ -176,7 +176,8 @@ const Experience = ({ exp }) => {
       <div className="experience__header">
         <Avatar
           alt={exp.author.firstName}
-          src={exp.author.imageUrl}
+          src={exp.author.imageUrl.attachmentUrl}
+          
         />
         <div className="experience__header-info">
           <div className="exp__authorInfo">
@@ -261,7 +262,7 @@ const Experience = ({ exp }) => {
                   <Comment
                     key={c?.id}
                     username={c.author?.username}
-                    imgUrl={c.author?.imageUrl}
+                    imgUrl={c.author?.imageUrl.attachmentUrl}
                     comment={c?.description}
                     dateCreated={c?.creationDate}
                   />
