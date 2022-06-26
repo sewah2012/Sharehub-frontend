@@ -179,7 +179,7 @@ const SignupModal = ({ modalOpen, setModalOpen }) => {
           <Typography id="modal-modal-title" variant="h4" component="h2">
             Setup an Account
           </Typography>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} className="formmm">
             <TextField
               onChange={onChangeHandler}
               value={signupDetails.firstName}
