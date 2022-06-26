@@ -9,9 +9,10 @@ const AllExperiences = () => {
     const [state, dispatch] = useContext(AppContext);
     const { experience } = state;
     const [loading, setLoading] = useState(false);
-    const url = "/api/experience/list";
+    
   
     useEffect(() => {
+      const url = "/api/experience/list";
       axios
         .get(url)
         .then((resp) => {
@@ -35,7 +36,7 @@ const AllExperiences = () => {
          {loading ? (
           <LinearProgress />
         ) : (
-          experience.map((ex) => <Experience key={ex.id} experience={ex} />)
+          experience.map((ex) => <Experience key={ex.id} exp={ex} />)
         )}
     </div>
   )

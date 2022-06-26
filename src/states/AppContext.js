@@ -9,7 +9,8 @@ const initialState =
         experience:[],
         currentUser: {},
         currentUserDetails:{},
-        latestExperiences: []
+        popularExperiences: [],
+        myExperiences: []
     }
 
 export  const AppProvider=(props)=>{

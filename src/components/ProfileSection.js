@@ -3,7 +3,7 @@ import React from 'react'
 
 const ProfileSection = () => {
   return (
-    <div className='profileSection'>ProfileSection</div>
+    <div className='profileSection'><h4>User Info</h4></div>
   )
 }
 

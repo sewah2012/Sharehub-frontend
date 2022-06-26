@@ -36,11 +36,8 @@ const [{experience},dispatch] = useContext(AppContext)
   };
   const handleImageUpload = (event) => {
     var file = event.target.files[0];
-
-    console.log(file);
-
     const url = URL.createObjectURL(file);
-    console.log(url);
+   
     // setSelectedFile(event.target.files[0])
 
     setAttachements([
@@ -54,7 +51,6 @@ const [{experience},dispatch] = useContext(AppContext)
 
   const removeAttachement = (url) => {
     var newAtt = attachements.filter((a) => a.url !== url);
-    // console.log(newAtt);
     setAttachements(newAtt);
   };
 
@@ -62,19 +58,13 @@ const [{experience},dispatch] = useContext(AppContext)
     event.preventDefault();
     setIsLoading(true);
 
-    // alert("new exp submited")
-
-    // const multipartsfiles = [];
-
     const bodyFormData = new FormData();
 
     attachements.forEach((a) => {
       bodyFormData.append("attachements", a.file);
     });
 
-    console.log("bodyFormData: " + bodyFormData);
     bodyFormData.append("experience", JSON.stringify(experienceDetails));
-    console.log("bodyFormData: " + bodyFormData);
 
     axios({
       method: "post",
