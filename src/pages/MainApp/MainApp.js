@@ -9,6 +9,7 @@ import ProfileSection from "../../components/ProfileSection";
 import { Details } from "@mui/icons-material";
 import axios from "axios";
 import CompleteRegistration from "../../components/CompleteRegistration";
+import Footer from "../../components/Footer";
 
 const MainApp = () => {
   const [{ currentUserDetails }, dispatch] = useContext(AppContext);
@@ -92,7 +93,7 @@ const MainApp = () => {
       )}
 
       <footer>
-        <h4>Footer</h4>
+        <Footer />
       </footer>
     </div>
   );
