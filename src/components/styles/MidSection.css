@@ -47,5 +47,9 @@
         height: fit-content;
         /* width:  */
     }
+
+    .ProfileSection{
+        width: 20%;
+    }
   
 }

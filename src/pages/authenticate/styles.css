@@ -50,12 +50,13 @@
   background-color: white;
   display: flex;
   flex-direction: column;
-  margin: 2rem;
+  /* margin: 2rem; */
   padding: 2rem 1rem;
   align-items: center;
   height: 80%;
   overflow-y: scroll;
   /* width: 25rem; */
+ 
 }
 
 .signupModalForm .signupTextfield {
@@ -67,9 +68,7 @@
     height: inherit;
     width: fit-content;
     display: flex;
-    flex-direction: column;
-    
-    
+    flex-direction: column;    
   }
 
   .auth__main {
@@ -115,8 +114,8 @@
     /* width: fit-content; */
     /* align-items: center; */
     position: absolute;
-    /* top: 10%; */
-    /* right: 50%; */
+    top:10%;
+    left: 30%;
     /* transform: "translate(-50%,-50%)";  */
     border: 2px solid #000;
     box-shadow: 24;
