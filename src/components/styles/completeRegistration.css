@@ -1,7 +1,8 @@
 .completeRegistration{
     padding: 1.5rem;
     background-color: white;
-    z-index: 99;
+    width: fit-content;
+    /* z-index: 99; */
 }
 
 .completeRegistration__form{

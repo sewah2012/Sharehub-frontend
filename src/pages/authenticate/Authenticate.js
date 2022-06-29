@@ -143,10 +143,9 @@ const Authenticate = () => {
     <div className="auth">
       <div className="auth__main">
         <div className="auth__main-left">
-          <img src="/assets/imgs/logo.svg" alt="sharehub-logo" />
+          <img src="/assets/imgs/logo2.svg" alt="sharehub-logo" />
           <p>
-            whether it is a business experience for example : plumbing,
-            mechanics, DIY, etc.) or an experience at a your famous restaurant
+            Whether it is an experience with a service or an experience at a your famous restaurant
             or theatre, Share Hub allows you to share your experiences with the
             world and help people make informed choices.{" "}
           </p>
