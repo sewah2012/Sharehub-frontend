@@ -55,7 +55,15 @@
     background-color: #3b3b3d;
 }
 
-@media only screen and (min-width: 600px) {
+.onMobile{
+    display: block;
+}
+
+.onLarge{
+    display: none;
+}
+
+@media only screen and (min-width: 713px) {
     .searchWrapper{
         background-color: #FCF2F2;
         width: fit-content;
@@ -81,6 +89,14 @@
         border: none;
         outline: none;
        
+    }
+
+    .onMobile{
+        display: none;
+    }
+
+    .onLarge{
+        display: block;
     }
 
 

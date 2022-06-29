@@ -17,8 +17,7 @@ import { Link } from "react-router-dom";
 const MainAppBar = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const [{currentUserDetails}, dispatch] = useContext(AppContext);
-
+  const [{ currentUserDetails }, dispatch] = useContext(AppContext);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -28,10 +27,10 @@ const MainAppBar = () => {
   };
 
   const logout = () => {
-    dispatch({  
+    dispatch({
       type: "SIGNOUT",
-      payload: false
-    })
+      payload: false,
+    });
 
     localStorage.removeItem("token");
   };
@@ -55,12 +54,12 @@ const MainAppBar = () => {
               objectFit: "contained",
             }}
           >
-            <Link to= "/">
-            <img
-              src="/assets/imgs/logo2.svg"
-              alt="share_hub_logo"
-              style={{ width: "100%", height: "100%" }}
-            />
+            <Link to="/">
+              <img
+                src="/assets/imgs/logo2.svg"
+                alt="share_hub_logo"
+                style={{ width: "100%", height: "100%" }}
+              />
             </Link>
           </Box>
 
@@ -79,33 +78,47 @@ const MainAppBar = () => {
             </div>
           </Box>
 
-          <Box>
-            <Tooltip title="view profile">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt={currentUserDetails.firstName} src={currentUserDetails?.imageUrl?.attachmentUrl} />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              <MenuItem onClick={handleCloseUserMenu}>
-                <Button onClick={logout}>Logout</Button>
-              </MenuItem>
-            </Menu>
-          </Box>
+          <div className="onLarge">
+            <Button onClick={logout} variant="contained">Logout</Button>
+          </div>
+          <div className="onMobile">
+            <Box>
+              <Tooltip title="View menu">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar
+                    alt={currentUserDetails.firstName}
+                    src={currentUserDetails?.imageUrl?.attachmentUrl}
+                  />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: "45px" }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Button onClick={logout}>Logout</Button>
+                </MenuItem>
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Button onClick={logout}>Edit Profile</Button>
+                </MenuItem>
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Button>Reset Password</Button>
+                </MenuItem>
+              </Menu>
+            </Box>
+          </div>
         </Toolbar>
       </Container>
     </AppBar>

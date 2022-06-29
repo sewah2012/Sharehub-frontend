@@ -1,8 +1,6 @@
-import "./styles.css";
-import { Button, CircularProgress, TextField, Typography } from "@mui/material";
-import React, { useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+// import "./styles.css";
+
+import React from "react";
 import ConfirmCodePage from "../../components/ConfirmCodePage";
 
 const ConfirmEmail = () => {

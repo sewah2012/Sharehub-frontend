@@ -23,3 +23,17 @@
     height: inherit;
 
 }
+
+
+@media only screen and (min-width: 713px) {
+    .completeRegistration{
+        padding: 1.5rem;
+        background-color: white;
+        z-index: 99;
+        width: 30%;
+        margin: auto;
+        height: 100%;
+        margin-top: 5rem;
+        margin-bottom: 5rem;
+    }
+}

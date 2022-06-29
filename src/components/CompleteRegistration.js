@@ -22,8 +22,8 @@ const CompleteRegistration = () => {
   const handleImageUpload = (event) => {
     setErrors({
       ...errors,
-      profilePicture: false
-    })
+      profilePicture: false,
+    });
 
     var file = event.target.files[0];
 
@@ -43,7 +43,7 @@ const CompleteRegistration = () => {
     });
 
     setCompleteRegistrationDetails({
-        ...completeRegistrationDetails,
+      ...completeRegistrationDetails,
       [event.target.name]: event.target.value,
     });
   };
@@ -69,20 +69,18 @@ const CompleteRegistration = () => {
       return;
     }
 
-    if(selectedFile ===""){
+    if (selectedFile === "") {
       setErrors({
         ...errors,
-        profilePicture: true
-      })
+        profilePicture: true,
+      });
       setIsLoading(false);
-      return
+      return;
     }
 
     const formData = new FormData();
     formData.append("file", selectedFile);
     const profile_upload_url = "/api/storage/upload/image";
-
-
 
     axios({
       method: "post",
@@ -94,7 +92,7 @@ const CompleteRegistration = () => {
         if (resp.status === 200) {
           const { filename, type, url } = resp.data.response;
 
-         const att = {
+          const att = {
             attachmentName: filename,
             type: type,
             attachmentUrl: url,
@@ -119,13 +117,13 @@ const CompleteRegistration = () => {
                 // console.log(response.data);
                 dispatch({
                   type: "LOAD_CURRENT_USER_DETAILS",
-                  payload: response.data
-                })
+                  payload: response.data,
+                });
                 setIsLoading(false);
                 dispatch({
                   type: "REGISTRATION_COMPLETE",
-                  payload: true
-                })
+                  payload: true,
+                });
               }
 
               return;
@@ -137,7 +135,6 @@ const CompleteRegistration = () => {
 
           return;
         }
-        
       })
       .catch((err) => {
         console.log(err.response.data);
@@ -146,8 +143,6 @@ const CompleteRegistration = () => {
       });
 
     //save stuff ...
-
-   
   };
   return (
     <div className="completeRegistration">
@@ -167,7 +162,6 @@ const CompleteRegistration = () => {
           name="website"
           label="Website"
           helperText="please provide your Website"
-
         />
         <br />
         <br />
@@ -230,11 +224,15 @@ const CompleteRegistration = () => {
           </label>
           <br />
           <br />
-          <div className="profile_pic_preview">
-            <img src={preview} alt="selected Profile picture" />
-          </div>
+          {selectedFile !== "" && (
+            <div className="profile_pic_preview">
+              <img src={preview} alt="selected Profile picture" />
+            </div>
+          )}
         </div>
-          { errors.profilePicture && <p style={{color:"red"}}>Please upload a profile picture</p>}
+        {errors.profilePicture && (
+          <p style={{ color: "red" }}>Please upload a profile picture</p>
+        )}
         <br />
         <br />
 
