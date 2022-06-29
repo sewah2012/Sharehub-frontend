@@ -16,8 +16,8 @@ const ProfileSection = () => {
       </div>
 
       <div className="profileSection__actions">
-        <Button>Edit Profile</Button>
-        <Button>Reset Password</Button>
+        <Button variant = "outlined">Edit Profile</Button>
+        <Button variant = "outlined">Reset Password</Button>
 
       </div>
 
