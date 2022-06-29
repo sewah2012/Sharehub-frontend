@@ -97,7 +97,6 @@ const ConfirmCodePage = ({ codeMessage, confirmMessage, type }) => {
               Ignore
             </Button>
 
-
         </div>
       )}
     </div>
