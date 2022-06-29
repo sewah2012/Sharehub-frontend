@@ -1,8 +1,36 @@
+.forgetPassword{
+    width: 100%;
+    position: absolute;
+    top: 30%;
+  
+ 
+}
+   
+
+    .confirmEmail__form{
+        width: 100%;
+        background-color: white;
+        /* border-radius: 1rem; */
+        margin: auto;
+      
+    }
 
 
 
 
+@media only screen and (min-width: 713px) {
+    .forgetPassword{
+        width: 30%;
+        position: absolute;
+        top: 40%;
+        left: 40%;
+     
+    }
 
-@media only screen and (min-width: 600px) {
-    
+    .confirmEmail__form{
+        background-color: white;
+        border-radius: 1rem;
+        margin: auto;
+      
+    }
 }
