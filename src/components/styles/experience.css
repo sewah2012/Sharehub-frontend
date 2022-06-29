@@ -108,14 +108,13 @@
 
     .experience__content-images{
         width: inherit;
-        height: fit-content;
-        /* background: violet; */
-       
-        
+        /* background: violet; */       
     }
 
     .experience__content-images img{
-        object-fit: cover;
+        object-fit: contain;
+        height: 25rem ;
+        width: 25rem;
         border-radius: 2rem;
         box-shadow: 10px 10px 8px #888888;
     }
