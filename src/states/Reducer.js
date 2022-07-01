@@ -51,11 +51,19 @@ export default function reducer(state, action) {
         myExperiences: action.payload
       }
 
-    // case "DELETE_EXPERIENCE":
-    //   return {
-    //     ...state,
-    //     experience: 
-    //   }
+    case "EDIT_EXPERIENCE":
+      let updatedX; 
+      state.experience.forEach(x => {
+       if(x.id===action.payload.id){
+        x.title = action.payload.title
+        x.details = action.payload.details
+        x.experienceType = action.payload.experienceType
+       }
+        
+      });
+      return {
+        ...state
+      }
     
     default:
       return state;

@@ -24,6 +24,7 @@ import moment from "moment";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
 import DeleteAlertDialog from "./DeleteAlertDialog";
+import EditExperience from "./EditExperience";
 
 const Experience = ({ exp }) => {
   const [showComments, setShowComments] = useState(false);
@@ -42,6 +43,7 @@ const Experience = ({ exp }) => {
   const [loading, setLoading] = useState(false);
   const [openExpMoreVert, setOpenExpMoreVert] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false)
+  const [openEditModal, setOpenEditModal] = useState(false)
 
   const ref = useDetectClickOutside({
     onTriggered: () => setOpenExpMoreVert(false),
@@ -144,7 +146,7 @@ const Experience = ({ exp }) => {
 
   const editExperience = () => {
     setOpenExpMoreVert(!openExpMoreVert);
-    alert("edit Experience");
+    setOpenEditModal(!openEditModal)
   };
 
   const expActionsOptions = [
@@ -170,7 +172,9 @@ const Experience = ({ exp }) => {
  
 
   return (
+    <>
     <div className="experience">
+    <EditExperience open={openEditModal} setOpenEditModal={setOpenEditModal} experience={exp}/>
       {isDeleting && <LinearProgress />}
       <DeleteAlertDialog confirmDelete = {confirmDelete} open={openDeleteDialog} handleClose={closeDeleteDialog}/>
       <div className="experience__header">
@@ -272,7 +276,9 @@ const Experience = ({ exp }) => {
           )}
         </div>
       </div>
+      
     </div>
+    </>
   );
 };
 
