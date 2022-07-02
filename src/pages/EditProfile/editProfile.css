@@ -1,0 +1,23 @@
+
+.editProfile__form{
+    background-color: aliceblue;
+    padding: 1rem;
+    margin: 1rem;
+}
+
+
+
+
+
+@media only screen and (min-width: 713px) {
+    
+    .editProfile__form{
+        background-color: aliceblue;
+        padding: 1rem;
+        width: 35rem;
+        margin: auto;
+        margin-top: 5rem;
+    }
+
+
+}

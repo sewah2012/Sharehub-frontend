@@ -18,12 +18,16 @@ import AuthVerify from "./utilities/AuthVerify";
 import ConfirmEmail from "./pages/confirmEmail/ConfirmEmail";
 import { decodeToken } from "./utilities/Utilities";
 import jwtDecode from "jwt-decode";
+import EditProfile from "./pages/EditProfile/EditProfile";
 
 const AUTH_TOKEN = localStorage.getItem("token");
 axios.defaults.headers.common["Authorization"] = AUTH_TOKEN;
-axios.defaults.headers.common["TIMEZONE_HEADER_NAME"] = (new Date()).getTimezoneOffset();;
+axios.defaults.headers.common["TIMEZONE_HEADER_NAME"] =
+  new Date().getTimezoneOffset();
 
-const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT || 'https://api-dev-sharehub.herokuapp.com';
+const API_ENDPOINT =
+  process.env.REACT_APP_API_ENDPOINT ||
+  "https://api-dev-sharehub.herokuapp.com";
 axios.defaults.baseURL = API_ENDPOINT;
 
 // if (jwtDecode(AUTH_TOKEN).exp < Date.now() / 1000) {
@@ -43,20 +47,19 @@ const App = () => {
 
   useEffect(() => {
     if (!!token) {
-     
-          axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
 
-          const currentUser = decodeToken(token);
+      const currentUser = decodeToken(token);
 
-          dispatch({
-            type: "CURRENT_USER",
-            payload: currentUser,
-          });
+      dispatch({
+        type: "CURRENT_USER",
+        payload: currentUser,
+      });
 
-          dispatch({
-            type: "LOGIN",
-            payload: true,
-          });
+      dispatch({
+        type: "LOGIN",
+        payload: true,
+      });
     }
 
     return () => {};
@@ -79,7 +82,14 @@ const App = () => {
               </ProtectedRoute>
             }
           />
-
+          <Route
+            path="/edit-profile"
+            element={
+              <ProtectedRoute isAuthenticated={true}>
+                <EditProfile />
+             </ProtectedRoute>
+            }
+          />
           <Route path="/confirm-email" element={<ConfirmEmail />} />
           <Route path="/forgot-password" element={<ForgetPassword />} />
         </Routes>
