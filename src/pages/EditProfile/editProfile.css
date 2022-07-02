@@ -3,6 +3,8 @@
     background-color: aliceblue;
     padding: 1rem;
     margin: 1rem;
+    height: 90vh;
+    overflow-y: scroll;
 }
 
 
@@ -17,6 +19,7 @@
         width: 35rem;
         margin: auto;
         margin-top: 5rem;
+        height: fit-content;
     }
 
 
