@@ -3,7 +3,9 @@ import React, { useContext, useState } from "react";
 import MainAppBar from "../../components/MainAppBar";
 import {
   Button,
+  Chip,
   CircularProgress,
+  Divider,
   Input,
   Modal,
   TextField,
@@ -281,6 +283,15 @@ const EditProfile = ({
           Save Changes
           {isLoading && <CircularProgress />}
         </Button>
+        <br />
+            <br />
+            <Divider>
+              <Chip label="or" />
+            </Divider>
+            <br />
+            <Button variant="outlined" fullWidth onClick={handleClose}>
+              Ignore
+            </Button>
       </form>
     </Modal>
   );

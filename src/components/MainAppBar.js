@@ -14,7 +14,7 @@ import { Search } from "@mui/icons-material";
 import { AppContext } from "./../states/AppContext";
 import { Link } from "react-router-dom";
 
-const MainAppBar = () => {
+const MainAppBar = ({openEditProfileModal}) => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [{ currentUserDetails }, dispatch] = useContext(AppContext);
@@ -111,7 +111,7 @@ const MainAppBar = () => {
                   <Button onClick={logout}>Logout</Button>
                 </MenuItem>
                 <MenuItem onClick={handleCloseUserMenu}>
-                  <Button onClick={logout}>Edit Profile</Button>
+                  <Button onClick={()=>openEditProfileModal(true)}>Edit Profile</Button>
                 </MenuItem>
                 <MenuItem onClick={handleCloseUserMenu}>
                   <Button>Reset Password</Button>

@@ -16,7 +16,7 @@ const MainApp = () => {
   // console.log(currentUser)
   const [mobile, setMobile] = useState(true);
   const [loading, setLoading] = useState(false);
-  // const [regComplete, setRegComplete] = useState(false)
+  const [openEditProfileModal, setOpenEditProfileModal] = useState(false)
 
   // openShare
 
@@ -46,7 +46,7 @@ const MainApp = () => {
 
   return (
     <div className="mainApp">
-      <MainAppBar />
+      <MainAppBar openEditProfileModal={setOpenEditProfileModal}/>
 
       {loading ? (
         <LinearProgress />
@@ -84,7 +84,7 @@ const MainApp = () => {
               <MidSection />
 
               <div className="ProfileSection">
-                <ProfileSection />
+                <ProfileSection openEditProfileModal={openEditProfileModal} setOpenEditProfileModal={setOpenEditProfileModal} currentUserDetails={currentUserDetails} />
               </div>
             </section>
           ) 
@@ -92,6 +92,8 @@ const MainApp = () => {
           }
 
           {!currentUserDetails?.registrationCompleted && <CompleteRegistration />}
+
+  
         
         </div>
       )}
