@@ -7,8 +7,7 @@ import { Edit, LockReset, ResetTv } from '@mui/icons-material'
 import EditProfile from '../pages/EditProfile/EditProfile'
 
 
-const ProfileSection = () => {
-  const [openEditProfileModal, setOpenEditProfileModal] = useState(false)
+const ProfileSection = ({openEditProfileModal, setOpenEditProfileModal}) => {
   const [{currentUserDetails}, dispatch] = useContext(AppContext);
   return (
     <div className='profileSection'>
