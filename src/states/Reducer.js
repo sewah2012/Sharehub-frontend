@@ -28,6 +28,21 @@ export default function reducer(state, action) {
         ...state,
         currentUserDetails: action.payload
       }
+    
+      case "UPDATE_CURRENT_USER_DETAILS":
+        
+
+        return {
+          ...state,
+          currentUserDetails: {
+            ...state.currentUserDetails,
+            website: action.payload.website,
+            nickname: action.payload.nickname,
+            dateOfBirth: action.payload.dateOfBirth,
+            address: action.payload.address,
+            imageUrl: action.payload.imageUrl
+          }
+        }
 
     case "REGISTRATION_COMPLETE": 
       return {

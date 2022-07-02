@@ -52,7 +52,8 @@ const MainApp = () => {
         <LinearProgress />
       ) : (
         <div>
-          {currentUserDetails?.registrationCompleted ? (
+          {
+          currentUserDetails?.registrationCompleted && (
             <section className="mainApp__midSection">
               <div className="mainApp__midSection-wrapper">
                 <div className="mainApp_shareAddBtn">
@@ -86,9 +87,12 @@ const MainApp = () => {
                 <ProfileSection />
               </div>
             </section>
-          ) : (
-            <CompleteRegistration />
-          )}
+          ) 
+            
+          }
+
+          {!currentUserDetails?.registrationCompleted && <CompleteRegistration />}
+        
         </div>
       )}
 
