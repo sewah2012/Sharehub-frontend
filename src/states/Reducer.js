@@ -64,6 +64,15 @@ export default function reducer(state, action) {
         myExperiences: action.payload
       }
 
+    case "RESET_PASSWORD": 
+      return {
+        ...state,
+        currentUserDetails:{
+          ...state.currentUserDetails,
+          resetPassword: action.payload
+        }
+      }
+
     case "EDIT_EXPERIENCE":
       let updatedX; 
       state.experience.forEach(x => {
