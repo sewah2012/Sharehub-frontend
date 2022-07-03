@@ -3,6 +3,7 @@ import React, { useContext, useState } from "react";
 import {
   Avatar,
   Button,
+  Card,
   Divider,
   IconButton,
   LinearProgress,
@@ -126,7 +127,7 @@ const Experience = ({ exp }) => {
           console.log(newList)
           dispatch({
             type: "LOAD_EXPERIENCES",
-            Payload: newList
+            payload: newList
           })
 
           setIsDeleting(false)
@@ -174,6 +175,7 @@ const Experience = ({ exp }) => {
   return (
     <>
     <div className="experience">
+      <Card sx={{ maxWidth: 600, padding: "1rem" }} >
     <EditExperience open={openEditModal} setOpenEditModal={setOpenEditModal} experience={exp}/>
       {isDeleting && <LinearProgress />}
       <DeleteAlertDialog confirmDelete = {confirmDelete} open={openDeleteDialog} handleClose={closeDeleteDialog}/>
@@ -204,9 +206,7 @@ const Experience = ({ exp }) => {
       </div>
       <Divider />
       <div className="experience__content">
-        <h2>{exp.title}</h2>
-        <p>{exp.details}</p>
-        <div className="experience__content-images">
+      <div className="experience__content-images">
           <Carousel showThumbs={false}>
             {exp.attachments.map((att, index) => (
               <div key={index}>
@@ -215,6 +215,9 @@ const Experience = ({ exp }) => {
             ))}
           </Carousel>
         </div>
+        <h2>{exp.title}</h2>
+        <p>{exp.details}</p>
+        
 
         <div className="">
           <div className="experience__content-reactions">
@@ -276,7 +279,7 @@ const Experience = ({ exp }) => {
           )}
         </div>
       </div>
-      
+      </Card>
     </div>
     </>
   );
