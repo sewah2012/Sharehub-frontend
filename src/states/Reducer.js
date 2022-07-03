@@ -30,8 +30,6 @@ export default function reducer(state, action) {
       }
     
       case "UPDATE_CURRENT_USER_DETAILS":
-        
-
         return {
           ...state,
           currentUserDetails: {

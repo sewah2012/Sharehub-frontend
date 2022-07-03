@@ -5,9 +5,10 @@ import { AppContext } from '../states/AppContext'
 import { Link } from 'react-router-dom'
 import { Edit, LockReset, ResetTv } from '@mui/icons-material'
 import EditProfile from '../pages/EditProfile/EditProfile'
+import ResetPassword from './ResetPassword'
 
 
-const ProfileSection = ({openEditProfileModal, setOpenEditProfileModal}) => {
+const ProfileSection = ({openEditProfileModal, setOpenEditProfileModal, resetPopup, openResetPopup}) => {
   const [{currentUserDetails}, dispatch] = useContext(AppContext);
   return (
     <div className='profileSection'>
@@ -26,7 +27,7 @@ const ProfileSection = ({openEditProfileModal, setOpenEditProfileModal}) => {
           
         </IconButton>
 
-        <IconButton>
+        <IconButton onClick={openResetPopup}>
           <Tooltip title="Reset Password">
           <LockReset />
           </Tooltip>
@@ -35,6 +36,7 @@ const ProfileSection = ({openEditProfileModal, setOpenEditProfileModal}) => {
       </div>
 
     <EditProfile openEditProfileModal={openEditProfileModal} setOpenEditProfileModal={setOpenEditProfileModal} currentUserDetails={currentUserDetails}/>
+    <ResetPassword openResetPopup={resetPopup} handleClose={openResetPopup} />
     </div>
   )
 }
