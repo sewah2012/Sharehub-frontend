@@ -62,7 +62,11 @@ const SetPassword = ({ setSetPassword }) => {
       .then((resp) => {
         if (resp.status === 200) {
           console.log(resp.data);
-          setSetPassword(false);
+        //   setSetPassword(false);
+        dispatch({
+            type: "RESET_PASSWORD",
+            payload: false
+        })
           setisLoading(false);
         }
       })
