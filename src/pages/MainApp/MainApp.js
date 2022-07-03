@@ -49,7 +49,7 @@ const MainApp = () => {
 
   return (
     <div className="mainApp">
-      <MainAppBar openEditProfileModal={setOpenEditProfileModal}/>
+      <MainAppBar openEditProfileModal={setOpenEditProfileModal} setResetPopup={setResetPopup}/>
 
       {loading ? (
         <LinearProgress />
