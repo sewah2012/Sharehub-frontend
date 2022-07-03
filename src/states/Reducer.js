@@ -10,8 +10,12 @@ export default function reducer(state, action) {
       };
     case "SIGNOUT":
       return {
-        ...state,
-        isAuthenticated: action.payload,
+        isAuthenticated:false,
+        experience:[],
+        currentUser: {},
+        currentUserDetails:{},
+        popularExperiences: [],
+        myExperiences: []
       };
     case "CURRENT_USER":
       return {
