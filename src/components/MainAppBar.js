@@ -10,11 +10,11 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import { Search } from "@mui/icons-material";
+import { Edit, ExitToApp, LockReset, Search } from "@mui/icons-material";
 import { AppContext } from "./../states/AppContext";
 import { Link } from "react-router-dom";
 
-const MainAppBar = ({openEditProfileModal}) => {
+const MainAppBar = ({openEditProfileModal, setResetPopup}) => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [{ currentUserDetails }, dispatch] = useContext(AppContext);
@@ -108,13 +108,13 @@ const MainAppBar = ({openEditProfileModal}) => {
                 onClose={handleCloseUserMenu}
               >
                 <MenuItem onClick={handleCloseUserMenu}>
-                  <Button onClick={()=>openEditProfileModal(true)}>Edit Profile</Button>
+                  <h4 className="menu__item" onClick={()=>openEditProfileModal(true)}>Edit Profile </h4><Edit />
+                </MenuItem>
+                <MenuItem  onClick={handleCloseUserMenu}>
+                  <h4 onClick={()=>setResetPopup(true)} className="menu__item">Reset Password </h4> <LockReset />
                 </MenuItem>
                 <MenuItem onClick={handleCloseUserMenu}>
-                  <Button>Reset Password</Button>
-                </MenuItem>
-                <MenuItem onClick={handleCloseUserMenu}>
-                  <Button onClick={logout}>Logout</Button>
+                  <h4 className ="menu__item" onClick={logout}>Logout</h4> <ExitToApp />
                 </MenuItem>
               </Menu>
             </Box>

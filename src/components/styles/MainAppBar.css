@@ -1,4 +1,6 @@
-
+.menu__item{
+    padding-right: 1rem;
+}
  .searchWrapper{
     background-color: #FCF2F2;
     width: fit-content;
