@@ -57,49 +57,53 @@ const MainApp = () => {
     <div className="mainApp">
       <MainAppBar openEditProfileModal={setOpenEditProfileModal} setResetPopup={setResetPopup}/>
 
-      {/* {loading && <LinearProgress />} */}
-  
-       {setPassword ? <SetPassword setSetPassword={setSetPassword}/> :  <div>
-          {
-          currentUserDetails?.registrationCompleted && (
-            <section className="mainApp__midSection">
-              <div className="mainApp__midSection-wrapper">
-                <div className="mainApp_shareAddBtn">
-                  <Button
-                    style={{
-                      backgroundColor: mobile ? "#6F7193" : "#8A8E9D",
-                    }}
-                    onClick={() => setMobile(!mobile)}
-                    variant="contained"
-                  >
-                    {mobile ? "Add Experience" : "Cancel"}
-                  </Button>
-                </div>
-                <div
-                  className={
-                    mobile
-                      ? "mainApp_midSection_addContainer display"
-                      : "mainApp_midSection_addContainer display openShare"
-                  }
-                >
-                  <div className="add_exp_form">
-                     <AddExperience open={mobile} setOpen={setMobile} />
-                  </div>
-                 
-                </div>
-              </div>
+      {loading ? <LinearProgress /> : (
 
-              <MidSection />
+currentUserDetails?.resetPassword ? <SetPassword setSetPassword={setSetPassword}/> :  <div>
+{
+currentUserDetails?.registrationCompleted && (
+  <section className="mainApp__midSection">
+    <div className="mainApp__midSection-wrapper">
+      <div className="mainApp_shareAddBtn">
+        <Button
+          style={{
+            backgroundColor: mobile ? "#6F7193" : "#8A8E9D",
+          }}
+          onClick={() => setMobile(!mobile)}
+          variant="contained"
+        >
+          {mobile ? "Add Experience" : "Cancel"}
+        </Button>
+      </div>
+      <div
+        className={
+          mobile
+            ? "mainApp_midSection_addContainer display"
+            : "mainApp_midSection_addContainer display openShare"
+        }
+      >
+        <div className="add_exp_form">
+           <AddExperience open={mobile} setOpen={setMobile} />
+        </div>
+       
+      </div>
+    </div>
 
-              <div className="ProfileSection">
-                <ProfileSection openEditProfileModal={openEditProfileModal} setOpenEditProfileModal={setOpenEditProfileModal} currentUserDetails={currentUserDetails} openResetPopup={openResetPopup} resetPopup={resetPopup}/>
-              </div>
-            </section>
-          )}
+    <MidSection />
 
-          {!currentUserDetails?.registrationCompleted && <CompleteRegistration />}
+    <div className="ProfileSection">
+      <ProfileSection openEditProfileModal={openEditProfileModal} setOpenEditProfileModal={setOpenEditProfileModal} currentUserDetails={currentUserDetails} openResetPopup={openResetPopup} resetPopup={resetPopup}/>
+    </div>
+  </section>
+)}
+
+{!currentUserDetails?.registrationCompleted && <CompleteRegistration />}
+
+</div>
         
-        </div>}
+      )}
+  
+       
    
       <footer>
         <Footer />
