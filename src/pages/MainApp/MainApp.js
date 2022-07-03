@@ -10,6 +10,7 @@ import { Details } from "@mui/icons-material";
 import axios from "axios";
 import CompleteRegistration from "../../components/CompleteRegistration";
 import Footer from "../../components/Footer";
+import SetPassword from "../../components/SetPassword";
 
 const MainApp = () => {
   const [{ currentUserDetails }, dispatch] = useContext(AppContext);
@@ -18,6 +19,7 @@ const MainApp = () => {
   const [loading, setLoading] = useState(false);
   const [openEditProfileModal, setOpenEditProfileModal] = useState(false)
   const [resetPopup, setResetPopup] = useState(false)
+  const [setPassword, setSetPassword] = useState(currentUserDetails.resetPassword)
 
   const openResetPopup = ()=>{
     setResetPopup(!resetPopup);
@@ -47,14 +49,17 @@ const MainApp = () => {
     return () => {};
   }, []);
 
+  const handleSetPassword=()=>{
+
+  }
+
   return (
     <div className="mainApp">
       <MainAppBar openEditProfileModal={setOpenEditProfileModal} setResetPopup={setResetPopup}/>
 
-      {loading ? (
-        <LinearProgress />
-      ) : (
-        <div>
+      {/* {loading && <LinearProgress />} */}
+  
+       {setPassword ? <SetPassword setSetPassword={setSetPassword}/> :  <div>
           {
           currentUserDetails?.registrationCompleted && (
             <section className="mainApp__midSection">
@@ -90,17 +95,12 @@ const MainApp = () => {
                 <ProfileSection openEditProfileModal={openEditProfileModal} setOpenEditProfileModal={setOpenEditProfileModal} currentUserDetails={currentUserDetails} openResetPopup={openResetPopup} resetPopup={resetPopup}/>
               </div>
             </section>
-          ) 
-            
-          }
+          )}
 
           {!currentUserDetails?.registrationCompleted && <CompleteRegistration />}
-
-  
         
-        </div>
-      )}
-
+        </div>}
+   
       <footer>
         <Footer />
       </footer>

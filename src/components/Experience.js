@@ -122,9 +122,7 @@ const Experience = ({ exp }) => {
       .then((resp) => {
         if (resp.status == 200) {
           // alert("Experience Successfully Deleted");
-          console.log(experience)
           const newList = experience.filter(e=>e.id!==exp.id)
-          console.log(newList)
           dispatch({
             type: "LOAD_EXPERIENCES",
             payload: newList

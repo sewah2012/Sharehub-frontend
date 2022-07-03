@@ -35,18 +35,14 @@ const Authenticate = () => {
       [event.target.name]: false,
     });
 
-    
-
     setLoginDetails({
       ...loginDetails,
       [event.target.name]: event.target.value,
     });
   };
 
-  
-
   const onSubmit = (event) => {
-    event.preventDefault()
+    event.preventDefault();
     localStorage.removeItem("token");
     setLoading(true);
     let { username, password } = loginDetails;
@@ -55,18 +51,18 @@ const Authenticate = () => {
         ...loginError,
         username: true,
       });
-      setLoading(false)
-      return
+      setLoading(false);
+      return;
     }
     if (password === "") {
       setLoginError({
         ...loginError,
         password: true,
       });
-      setLoading(false)
-      return
+      setLoading(false);
+      return;
     }
-   
+
     axios
       .post("/api/auth/login", loginDetails)
       .then((resp) => {
@@ -89,51 +85,59 @@ const Authenticate = () => {
             payload: true,
           });
 
-            
           setLoginDetails({
             username: "",
             password: "",
           });
 
-          setLoading(false);
+          axios
+            .get("/api/auth/myDetails")
+            .then((resp) => {
+              if (resp.status === 200) {
+                dispatch({
+                  type: "LOAD_CURRENT_USER_DETAILS",
+                  payload: resp.data,
+                });
+                setLoading(false);
+              }
+            })
+            .catch((err) => {
+              console.log(err.response.data);
+              setLoading(false);
+            });
 
-          return 
+          // setLoading(false);
+
+          return;
         }
-
-        
       })
       .catch((err) => {
-      //  console.log(err.response.data);
+        //  console.log(err.response.data);
 
-       const error = err.response.data;
+        const error = err.response.data;
 
-          
-        if(error?.message==="Bad credentials"){
+        if (error?.message === "Bad credentials") {
           setLoginError({
             ...loginError,
             password: true,
           });
-          setLoading(false)
+          setLoading(false);
 
-          return
+          return;
         }
 
-        if(error?.message==="An error occured while processing request"){
+        if (error?.message === "An error occured while processing request") {
           setLoginError({
             ...loginError,
             username: true,
           });
-          setLoading(false)
+          setLoading(false);
 
-          return
+          return;
         }
 
-        setLoading(false)
-      
+        setLoading(false);
       });
-
-  
-
   };
 
   const modalHandler = () => {
@@ -145,14 +149,15 @@ const Authenticate = () => {
         <div className="auth__main-left">
           <img src="/assets/imgs/logo2.svg" alt="sharehub-logo" />
           <p>
-            Whether it is an experience with a service or an experience at a your famous restaurant
-            or theatre, Share Hub allows you to share your experiences with the
-            world and help people make informed choices.{" "}
+            Whether it is an experience with a service or an experience at a
+            your famous restaurant or theatre, Share Hub allows you to share
+            your experiences with the world and help people make informed
+            choices.{" "}
           </p>
         </div>
 
         <div className="auth__main-right">
-          <Paper style={{ padding: "1rem"}}>
+          <Paper style={{ padding: "1rem" }}>
             <TextField
               name="username"
               label="Username"
@@ -204,7 +209,6 @@ const Authenticate = () => {
             </Button>
           </Paper>
         </div>
-       
       </div>
       {/* <div className="auth__footer">
         <Typography variant="h4">
@@ -215,7 +219,7 @@ const Authenticate = () => {
           Supervised by: Prof. Yassine
         </Typography>
       </div> */}
-       <SignupModal modalOpen={openModal} setModalOpen={setopenModal} />
+      <SignupModal modalOpen={openModal} setModalOpen={setopenModal} />
     </div>
   );
 };
