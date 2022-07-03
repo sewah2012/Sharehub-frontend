@@ -82,14 +82,7 @@ const App = () => {
               </ProtectedRoute>
             }
           />
-          <Route
-            path="/edit-profile"
-            element={
-              <ProtectedRoute isAuthenticated={true}>
-                <EditProfile />
-             </ProtectedRoute>
-            }
-          />
+     
           <Route path="/confirm-email" element={<ConfirmEmail />} />
           <Route path="/forgot-password" element={<ForgetPassword />} />
         </Routes>

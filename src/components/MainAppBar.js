@@ -108,13 +108,13 @@ const MainAppBar = ({openEditProfileModal}) => {
                 onClose={handleCloseUserMenu}
               >
                 <MenuItem onClick={handleCloseUserMenu}>
-                  <Button onClick={logout}>Logout</Button>
-                </MenuItem>
-                <MenuItem onClick={handleCloseUserMenu}>
                   <Button onClick={()=>openEditProfileModal(true)}>Edit Profile</Button>
                 </MenuItem>
                 <MenuItem onClick={handleCloseUserMenu}>
                   <Button>Reset Password</Button>
+                </MenuItem>
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Button onClick={logout}>Logout</Button>
                 </MenuItem>
               </Menu>
             </Box>

@@ -17,8 +17,11 @@ const MainApp = () => {
   const [mobile, setMobile] = useState(true);
   const [loading, setLoading] = useState(false);
   const [openEditProfileModal, setOpenEditProfileModal] = useState(false)
+  const [resetPopup, setResetPopup] = useState(false)
 
-  // openShare
+  const openResetPopup = ()=>{
+    setResetPopup(!resetPopup);
+  }
 
   useEffect(() => {
     setLoading(true);
@@ -84,7 +87,7 @@ const MainApp = () => {
               <MidSection />
 
               <div className="ProfileSection">
-                <ProfileSection openEditProfileModal={openEditProfileModal} setOpenEditProfileModal={setOpenEditProfileModal} currentUserDetails={currentUserDetails} />
+                <ProfileSection openEditProfileModal={openEditProfileModal} setOpenEditProfileModal={setOpenEditProfileModal} currentUserDetails={currentUserDetails} openResetPopup={openResetPopup} resetPopup={resetPopup}/>
               </div>
             </section>
           ) 
