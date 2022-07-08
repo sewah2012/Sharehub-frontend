@@ -19,6 +19,7 @@ import ConfirmEmail from "./pages/confirmEmail/ConfirmEmail";
 import { decodeToken } from "./utilities/Utilities";
 import jwtDecode from "jwt-decode";
 import EditProfile from "./pages/EditProfile/EditProfile";
+import Details from "./pages/details/Details";
 
 const AUTH_TOKEN = localStorage.getItem("token");
 axios.defaults.headers.common["Authorization"] = AUTH_TOKEN;
@@ -43,7 +44,7 @@ const token = localStorage.getItem("token");
 // console.log((new Date()).getTimezoneOffset())
 const App = () => {
   const [state, dispatch] = useContext(AppContext);
-  const { isAuthenticated } = state;
+  const { isAuthenticated,  } = state;
 
   useEffect(() => {
     if (!!token) {
@@ -79,6 +80,16 @@ const App = () => {
             element={
               <ProtectedRoute isAuthenticated={isAuthenticated}>
                 <MainApp />
+              </ProtectedRoute>
+            }
+          />
+
+          
+<Route
+            path="/details/:id"
+            element={
+              <ProtectedRoute isAuthenticated={isAuthenticated}>
+               <Details />
               </ProtectedRoute>
             }
           />
