@@ -1,0 +1,287 @@
+import "./styles/experienceDetails.css";
+import React, { useContext, useState } from "react";
+import { AppContext } from "../states/AppContext";
+import { useDetectClickOutside } from "react-detect-click-outside";
+import EditExperience from "./EditExperience";
+import {
+  Avatar,
+  Button,
+  Card,
+  Divider,
+  IconButton,
+  LinearProgress,
+} from "@mui/material";
+import DeleteAlertDialog from "./DeleteAlertDialog";
+import moment from "moment";
+import isOwnerOrAdmin from "../utilities/OwnerOrAdmin";
+import { AddComment, Favorite, FavoriteBorder, MoreVert } from "@mui/icons-material";
+import MoreVertPopUp from "./MoreVertPopUp";
+import { Carousel } from "react-responsive-carousel";
+import axios from "axios";
+import Comment from "./Comment";
+
+const ExperienceDetails = ({ exp }) => {
+  const [showComments, setShowComments] = useState(true);
+  const [comment, setComment] = useState("");
+  const [commentError, setcommentError] = useState(false);
+  const [state, dispatch] = useContext(AppContext);
+  const { currentUser, experience } = state;
+  const [isLiked, setIsLiked] = useState(exp?.likes.includes(currentUser.sub));
+
+  const [likeCount, setLikeCount] = useState(exp?.likes.length);
+  const [commentCount, setCommentCount] = useState(exp?.comments.length);
+
+  const [commentsList, setcommentsList] = useState(exp?.comments);
+  const [loading, setLoading] = useState(false);
+  const [openExpMoreVert, setOpenExpMoreVert] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [openEditModal, setOpenEditModal] = useState(false);
+
+  const ref = useDetectClickOutside({
+    onTriggered: () => setOpenExpMoreVert(false),
+  });
+
+  const handleOpenExpMoreVert = () => {
+    setOpenExpMoreVert(!openExpMoreVert);
+  };
+  const handleLike = () => {
+    const url = `/api/reaction/likeUnlike/${exp.id}`;
+    axios.get(url).then((resp) => {
+      if (resp.status === 200) {
+        if (isLiked) {
+          setLikeCount(likeCount - 1);
+        } else {
+          setLikeCount(likeCount + 1);
+        }
+      }
+    });
+    setIsLiked(!isLiked);
+  };
+
+  const handleShowComments = () => {
+    setShowComments(!showComments);
+  };
+
+  const handleSubmitComment = () => {
+    setLoading(true);
+    if (comment === "") {
+      setcommentError(true);
+      setLoading(false);
+      return;
+    }
+
+    const url = "/api/reaction/comment";
+    const data = {
+      description: comment,
+      experience: {
+        id: exp.id,
+      },
+    };
+    axios
+      .post(url, data)
+      .then((resp) => {
+        if (resp.status === 200) {
+          setcommentsList([resp.data, ...commentsList]);
+          setCommentCount(commentCount + 1);
+        }
+        setLoading(false);
+        setComment("");
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+        setLoading(false);
+        setComment("");
+      });
+  };
+
+  const likes = exp?.likes;
+  const comments = exp?.comments;
+
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const closeDeleteDialog = () => {
+    setOpenDeleteDialog(!openDeleteDialog);
+  };
+
+  const confirmDelete = () => {
+    setOpenDeleteDialog(!openDeleteDialog);
+    setIsDeleting(true);
+    const url = `/api/experience/delete/${exp.id}`;
+    axios
+      .delete(url)
+      .then((resp) => {
+        if (resp.status == 200) {
+          // alert("Experience Successfully Deleted");
+          const newList = experience.filter((e) => e.id !== exp.id);
+          dispatch({
+            type: "LOAD_EXPERIENCES",
+            payload: newList,
+          });
+
+          setIsDeleting(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err.response);
+        setIsDeleting(false);
+      });
+  };
+
+  const deleteExperience = () => {
+    setOpenExpMoreVert(!openExpMoreVert);
+    setOpenDeleteDialog(!openDeleteDialog);
+  };
+
+  const editExperience = () => {
+    setOpenExpMoreVert(!openExpMoreVert);
+    setOpenEditModal(!openEditModal);
+  };
+
+  const expActionsOptions = [
+    {
+      title: "Delete",
+      action: deleteExperience,
+    },
+
+    {
+      title: "Edit",
+      action: editExperience,
+    },
+  ];
+
+  const images = [];
+
+  exp?.attachments.forEach((att) => {
+    images.push({
+      url: att.attachmentUrl,
+    });
+  });
+
+  return (
+    <>
+      <div className="experienceDetails">
+        <Card sx={{ maxWidth: "100%", height: "100%", padding: "1rem" }}>
+          <EditExperience
+            open={openEditModal}
+            setOpenEditModal={setOpenEditModal}
+            experience={exp}
+          />
+          {isDeleting && <LinearProgress />}
+          <DeleteAlertDialog
+            confirmDelete={confirmDelete}
+            open={openDeleteDialog}
+            handleClose={closeDeleteDialog}
+          />
+          <div className="experienceDetails__header">
+            <Avatar
+              alt={exp?.author?.firstName}
+              src={exp?.author?.imageUrl?.attachmentUrl}
+            />
+            <div className="experienceDetails__header-info">
+              <div className="exp__authorInfo">
+                <h4>{exp.author.username}</h4>
+                <p>{moment(exp.creationDate).fromNow()}</p>
+              </div>
+              {isOwnerOrAdmin(currentUser, exp.author.username) && (
+                <div className="experienceDetails__action" ref={ref}>
+                  <IconButton onClick={handleOpenExpMoreVert}>
+                    <MoreVert />{" "}
+                  </IconButton>
+                  {openExpMoreVert && (
+                    <div className="experience__action-morevertpopup">
+                      <MoreVertPopUp options={expActionsOptions} />
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+          <Divider />
+          <div className="experienceDetails__content">
+            <div className="titles_heads">
+              <div className="experienceDetails__content-images">
+                <Carousel showThumbs={false}>
+                  {exp.attachments.map((att, index) => (
+                    <div key={index}>
+                      <img src={att.attachmentUrl} />
+                    </div>
+                  ))}
+                </Carousel>
+              </div>
+              <div className="info_dept">
+                <h2>{exp.title}</h2>
+                <p>{exp.details}</p>
+
+                <div className="">
+              <div className="experienceDetails__content-reactions">
+                <div className="likes">
+                  <p>{likeCount}</p>{" "}
+                  <IconButton onClick={handleLike}>
+                    {isLiked ? <Favorite /> : <FavoriteBorder />}
+                  </IconButton>
+                </div>
+                <div className="comments">
+                  <p>{commentCount} comments</p>
+                  <IconButton onClick={handleShowComments}>
+                    {" "}
+                    <AddComment />
+                  </IconButton>
+                </div>
+              </div>
+              {showComments && (
+                <div className="commentsList">
+                  {commentError && (
+                    <p
+                      style={{
+                        color: "red",
+                      }}
+                    >
+                      You have not written any comment yet.
+                    </p>
+                  )}
+                  {loading && <LinearProgress />}
+                  <div className="add_comment">
+                    <input
+                      type="text"
+                      name="comment"
+                      value={comment}
+                      onChange={(e) => {
+                        setcommentError(false);
+                        setComment(e.target.value);
+                      }}
+                      placeholder="write your comment here ..."
+                      autoFocus={false}
+                      autoComplete={false}
+                    />
+                    <Button
+                      onClick={handleSubmitComment}
+                      sx={{ color: "#2A2A48" }}
+                    >
+                      Publish
+                    </Button>
+                  </div>
+                  <div className="commentsList">
+                    {commentsList.map((c) => (
+                      <Comment
+                        key={c?.id}
+                        username={c.author?.username}
+                        imgUrl={c.author?.imageUrl?.attachmentUrl}
+                        comment={c?.description}
+                        dateCreated={c?.creationDate}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+              </div>
+            </div>
+
+            
+          </div>
+        </Card>
+      </div>
+    </>
+  );
+};
+
+export default ExperienceDetails;

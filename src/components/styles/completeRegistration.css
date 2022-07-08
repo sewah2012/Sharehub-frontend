@@ -3,6 +3,7 @@
     background-color: white;
     width: fit-content;
     /* z-index: 99; */
+    margin-top: 3rem;
 }
 
 .completeRegistration__form{

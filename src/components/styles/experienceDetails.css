@@ -1,0 +1,48 @@
+.experienceDetails{
+   margin: auto;
+    width: 100%;
+    height: fit-content;
+}
+
+.titles_heads{
+    display: flex;
+    flex-direction: column;
+}
+
+.experienceDetails__header-info{
+    display: flex;
+ 
+    justify-content: space-between;
+
+}
+
+.experienceDetails__content-images{
+    width: 80%;
+   margin: auto;
+}
+.experienceDetails__content-images img{
+    border-radius: 1.5rem;
+}
+
+.info_dept{
+    padding: .2rem;
+}
+
+@media only screen and (min-width: 713px) {
+
+    .titles_heads{
+        display: flex;
+        flex-direction: row;
+        /* justify-content: center; */
+    }
+
+    .info_dept{
+        flex: 1;
+        padding: 2rem;
+    }
+    .experienceDetails__content-images{
+        width: 40%;
+       /* margin: auto; */
+    }
+
+}

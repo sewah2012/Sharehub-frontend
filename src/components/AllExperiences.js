@@ -23,8 +23,6 @@ const AllExperiences = () => {
             });
   
             setLoading(false);
-  
-            console.log(resp.data);
           }
         })
         .catch((err) => {

@@ -11,6 +11,7 @@ import axios from "axios";
 import CompleteRegistration from "../../components/CompleteRegistration";
 import Footer from "../../components/Footer";
 import SetPassword from "../../components/SetPassword";
+import SearchHits from "../../components/SearchHits";
 
 const MainApp = () => {
   const [{ currentUserDetails }, dispatch] = useContext(AppContext);
@@ -20,6 +21,7 @@ const MainApp = () => {
   const [openEditProfileModal, setOpenEditProfileModal] = useState(false)
   const [resetPopup, setResetPopup] = useState(false)
   const [setPassword, setSetPassword] = useState(currentUserDetails.resetPassword)
+  const [searchData, setSearchData] = useState([])
 
   const openResetPopup = ()=>{
     setResetPopup(!resetPopup);
@@ -49,13 +51,15 @@ const MainApp = () => {
     return () => {};
   }, []);
 
-  const handleSetPassword=()=>{
-
+  const closeSearch=()=>{
+      setSearchData([])
   }
+
+  
 
   return (
     <div className="mainApp">
-      <MainAppBar openEditProfileModal={setOpenEditProfileModal} setResetPopup={setResetPopup}/>
+      <MainAppBar openEditProfileModal={setOpenEditProfileModal} setResetPopup={setResetPopup} setSearchData = {setSearchData}/>
 
       {loading ? <LinearProgress /> : (
 
@@ -89,7 +93,10 @@ currentUserDetails?.registrationCompleted && (
       </div>
     </div>
 
-    <MidSection />
+    <div className="MidSection">
+      {searchData.length == 0 && <MidSection />}
+    {searchData.length>0 && <SearchHits list = {searchData} closeSearch = {closeSearch} />}
+    </div>
 
     <div className="ProfileSection">
       <ProfileSection openEditProfileModal={openEditProfileModal} setOpenEditProfileModal={setOpenEditProfileModal} currentUserDetails={currentUserDetails} openResetPopup={openResetPopup} resetPopup={resetPopup}/>

@@ -35,11 +35,15 @@ footer{
     visibility: hidden;
 }
 
+.mainApp__midSection{ 
+    margin-top: 5rem;
 
+}
 
 
 
 @media only screen and (min-width: 713px) {
+   
     .mainApp{
         background-color: #D9D9D9;
         display: flex;
@@ -54,6 +58,7 @@ footer{
     }
 
     .mainApp__midSection{ 
+        margin-top: 5rem;
         /* flex: 1;  */
         display: flex;
         justify-content: space-evenly;

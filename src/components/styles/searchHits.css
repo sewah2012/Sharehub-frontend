@@ -1,0 +1,14 @@
+.searchHits{
+    width: inherit;
+    padding: 1rem;
+}
+
+.searchHitHeader{
+    display: flex;
+    margin-bottom: 1rem;
+}
+@media only screen and (min-width: 813px) {
+    .searchHits{
+        width: 50vw;
+    }
+}
